@@ -1,0 +1,62 @@
+<?php
+$_AZervo = new \App\AZervo();
+$_api = $_AZervo->getModel("api");
+?>
+<html>
+<?php $_AZervo->loadBlock("header") ?>
+<body>
+<?php $_AZervo->loadBlock("topHeader") ?>
+<div class="row main-content">
+    <table class="table table-striped results-table">
+        <thead>
+        <tr>
+            <th style="width: 10%;" scope="col">DOI</th>
+            <th style="width: 50%;" scope="col">Título</th>
+            <th style="width: 20%;" scope="col">Categoria</th>
+            <?php foreach ($_api->DATASETS_MODELS as $dataset) {
+                echo '<th style="width: 20%;" scope="col">' . ucfirst($dataset) . '</th>';
+            } ?>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+<script type="text/javascript">
+    let results = JSON.parse(sessionStorage.getItem("azervo_results"))
+    jQuery.each(results, function (key, values) {
+        jQuery(".results-table tbody").append(`
+            <tr class='result' doi='${key}'>
+                <td>${key}</td>
+                <td>${values.title}</td>
+                <td>${values.type}</td>
+                <?php foreach ($_api->DATASETS_MODELS as $dataset) {
+                    echo '<td class="'.$dataset.'"><img class="loading-gif" src="'.$_AZervo->getSkinUrl('images/loading.gif').'"></td>';
+                } ?>
+            </tr>
+        `)
+    })
+    document.addEventListener("DOMContentLoaded", function () {
+        jQuery(".result").each(function () {
+            let doi = jQuery(this).attr("doi")
+            let $this = this
+            jQuery.ajax({
+                url: '<?php echo $_AZervo::getUrl("search", "inDatasets")?>',
+                method: "POST",
+                data: {
+                    doi: doi
+                },
+                dataType: "json",
+                success: function (results) {
+                    jQuery.each(results, function (dataset, url) {
+                        let datasetEl = jQuery($this).find(`.${dataset}`)
+                        jQuery(datasetEl).html(url)
+
+                    })
+                }
+            })
+        })
+    })
+</script>
+</body>
+</html>

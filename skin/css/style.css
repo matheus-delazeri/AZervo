@@ -1,0 +1,63 @@
+html, body{
+    height: 100%;
+}
+
+html {
+    overflow: hidden;
+}
+
+.row {
+    margin: 0;
+}
+.main-content {
+    height: 100%;
+}
+.top-header {
+    padding: 0 2%;
+    width: 100%;
+    background-color: #ffffff;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border-bottom: 1px solid #cecece;
+}
+.searching {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    color: #444444;
+    text-align: center;
+}
+.loading-gif {
+    width: 10%;
+}
+.top-menu {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+.top-menu a {
+    margin: 0 5%;
+}
+.results-table {
+    display: block;
+    height: 80%;
+    margin: 2%;
+    width: 100%;
+    overflow-y: scroll;
+    table-layout: fixed;
+}
+
+.results-table td {
+    overflow-wrap: anywhere;
+}
+img.logo {
+    width: 50%;
+}
+
+@media only screen and (max-width: 990px) {
+    img.logo {
+        width: 100%;
+    }
+}

@@ -1,0 +1,49 @@
+<?php
+$_AZervo = new \App\AZervo();
+?>
+<html>
+    <?php $_AZervo->loadBlock("header")?>
+    <body>
+        <?php $_AZervo->loadBlock("topHeader")?>
+        <div class="row main-content" style="align-items: center">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control search-query" placeholder="Digite o título ou autor do documento..." aria-label="Digite o título ou autor do documento..." aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary btn-search" type="button">Buscar</button>
+                    </div>
+                </div>
+                <div class="searching" style="display: none">
+                    <span>Buscando resultados <img class="loading-gif" src='<?php echo $_AZervo->getSkinUrl("images/loading.gif")?>'></span>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+        <script type="text/javascript">
+            jQuery(".btn-search").click(function() {
+                jQuery(".searching").show()
+                let searchUrl = "<?php echo $_AZervo->getUrl("search")?>"
+                let resultsUrl = "<?php echo $_AZervo->getUrl("search", "results")?>";
+                let searchQuery = jQuery(".search-query").val()
+                if(searchQuery !== "") {
+                    jQuery.ajax({
+                        url: searchUrl,
+                        method: "POST",
+                        data: {
+                            query: searchQuery
+                        },
+                        dataType: "json",
+                        success: function (data){
+                            sessionStorage.setItem("azervo_results", JSON.stringify(data))
+                            jQuery(".searching").hide()
+                            window.location.replace(resultsUrl)
+                        }
+                    })
+                } else {
+                    alert("Digite algum valor na barra de busca")
+                }
+            })
+        </script>
+    </body>
+</html>

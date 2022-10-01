@@ -1,0 +1,10 @@
+{
+    "name": "azervo/app",
+    "description": "AZervo",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "require": {}
+}
