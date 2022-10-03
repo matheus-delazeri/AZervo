@@ -64,10 +64,8 @@ class Api
 
     public function buildGETUrl($baseUrl, $params)
     {
-
         return empty($params)
             ? $baseUrl
             : $baseUrl . "?" . http_build_query($params);
     }
-
 }
