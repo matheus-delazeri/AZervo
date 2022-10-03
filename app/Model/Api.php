@@ -6,15 +6,19 @@ use App\AZervo;
 
 class Api
 {
-    PUBLIC $DATASETS_MODELS = array(
+    public $DATASETS_MODELS = array(
         "scihub"
+    );
+    public $FILTERS = array(
+        "title"  => "Título",
+        "author" => "Autor"
     );
     const DATASETS_PATH = "api_datasets_";
 
-    public function getBasicResults($query)
+    public function getBasicResults($query, $filter)
     {
         $crossRef = AZervo::getModel("api_crossref");
-        $results = $crossRef->getResultsFound($query);
+        $results = $crossRef->getResultsFound($query, $filter);
 
         return json_encode($results);
     }
@@ -49,7 +53,6 @@ class Api
         curl_setopt_array($curl, array(
             CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_SSL_VERIFYHOST => 0,
             CURLOPT_SSL_VERIFYPEER => 0,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,

@@ -6,15 +6,16 @@ $_api = $_AZervo->getModel("api");
 <?php $_AZervo->loadBlock("header") ?>
 <body>
 <?php $_AZervo->loadBlock("topHeader") ?>
-<div class="row main-content">
+<div class="row" style="height: 100%">
     <table class="table table-striped results-table">
         <thead>
         <tr>
             <th style="width: 10%;" scope="col">DOI</th>
-            <th style="width: 50%;" scope="col">Título</th>
+            <th style="width: 20%;" scope="col">Autor</th>
+            <th style="width: 40%;" scope="col">Título</th>
             <th style="width: 20%;" scope="col">Categoria</th>
             <?php foreach ($_api->DATASETS_MODELS as $dataset) {
-                echo '<th style="width: 20%;" scope="col">' . ucfirst($dataset) . '</th>';
+                echo '<th style="width: 10%;" scope="col">' . ucfirst($dataset) . '</th>';
             } ?>
         </tr>
         </thead>
@@ -28,10 +29,11 @@ $_api = $_AZervo->getModel("api");
         jQuery(".results-table tbody").append(`
             <tr class='result' doi='${key}'>
                 <td>${key}</td>
+                <td>${values.author}</td>
                 <td>${values.title}</td>
                 <td>${values.type}</td>
                 <?php foreach ($_api->DATASETS_MODELS as $dataset) {
-                    echo '<td class="'.$dataset.'"><img class="loading-gif" src="'.$_AZervo->getSkinUrl('images/loading.gif').'"></td>';
+                    echo '<td class="dataset '.$dataset.'"><img class="loading-gif" src="'.$_AZervo->getSkinUrl('images/loading.gif').'"></td>';
                 } ?>
             </tr>
         `)
@@ -47,13 +49,18 @@ $_api = $_AZervo->getModel("api");
                     doi: doi
                 },
                 dataType: "json",
+                error: function() {
+                    let datasetEl = jQuery($this).find('.dataset')
+                    jQuery(datasetEl).html("Tempo excedido")
+                },
                 success: function (results) {
                     jQuery.each(results, function (dataset, url) {
                         let datasetEl = jQuery($this).find(`.${dataset}`)
                         jQuery(datasetEl).html(url)
 
                     })
-                }
+                },
+                timeout: 60000
             })
         })
     })

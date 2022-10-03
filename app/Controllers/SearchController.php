@@ -8,7 +8,7 @@ class SearchController
 {
     public function indexAction()
     {
-        echo AZervo::getModel("api")->getBasicResults($_POST["query"]);
+        echo AZervo::getModel("api")->getBasicResults($_POST["query"], $_POST["filter"]);
     }
 
     public function resultsAction()

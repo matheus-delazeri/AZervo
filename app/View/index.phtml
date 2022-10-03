@@ -1,15 +1,27 @@
 <?php
 $_AZervo = new \App\AZervo();
+$_api = new \App\Model\Api();
 ?>
 <html>
     <?php $_AZervo->loadBlock("header")?>
     <body>
         <?php $_AZervo->loadBlock("topHeader")?>
-        <div class="row main-content" style="align-items: center">
+        <div class="row" style="align-items: center; height: 70%">
             <div class="col-md-4"></div>
             <div class="col-md-4">
+                <img width="100%" src="<?php echo $_AZervo->getSkinUrl('images/logo-desc.png')?>">
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control search-query" placeholder="Digite o título ou autor do documento..." aria-label="Digite o título ou autor do documento..." aria-describedby="basic-addon2">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                        <div class="dropdown-menu">
+                            <?php
+                                foreach ($_api->FILTERS as $filter => $label) {
+                                    echo "<a class='dropdown-item' filter='$filter' id='filter-$filter' href='#'>$label</a>";
+                                }
+                            ?>
+                        </div>
+                    </div>
+                    <input type="text" class="form-control search-query" placeholder="Digite aqui..." aria-label="Digite o título ou autor do documento..." aria-describedby="basic-addon2">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary btn-search" type="button">Buscar</button>
                     </div>
@@ -21,6 +33,12 @@ $_AZervo = new \App\AZervo();
             <div class="col-md-4"></div>
         </div>
         <script type="text/javascript">
+            let searchFilter = "title"
+            jQuery(".dropdown-toggle").text(jQuery("#filter-title").text())
+            jQuery(".dropdown-item").click(function () {
+                jQuery(".dropdown-toggle").text(jQuery(this).text())
+                searchFilter = jQuery(this).attr("filter")
+            })
             jQuery(".btn-search").click(function() {
                 jQuery(".searching").show()
                 let searchUrl = "<?php echo $_AZervo->getUrl("search")?>"
@@ -31,7 +49,8 @@ $_AZervo = new \App\AZervo();
                         url: searchUrl,
                         method: "POST",
                         data: {
-                            query: searchQuery
+                            query: searchQuery,
+                            filter: searchFilter
                         },
                         dataType: "json",
                         success: function (data){

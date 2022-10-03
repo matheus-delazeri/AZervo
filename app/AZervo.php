@@ -29,12 +29,14 @@ class AZervo
 
     static public function getUrl($controllerPath, $action = "index")
     {
-        return self::getBaseUrl() . $controllerPath . "/" . $action;
+        $controllerPath = $controllerPath == "index" ? "" : $controllerPath . "/";
+        $action = $action == "index" ? "" : $action;
+        return self::getBaseUrl() . $controllerPath . $action;
     }
 
     static public function getSkinUrl($path)
     {
-        return self::getBaseUrl() ."skin/". $path;
+        return self::getBaseUrl() . "skin/" . $path;
     }
 
     public function runActionByUrl()
@@ -65,7 +67,9 @@ class AZervo
     static public function getBaseUrl()
     {
         $requestUrl = self::getCurrentUrl();
-        return substr($requestUrl, 0, strpos($requestUrl, self::BASE_URL_LIMIT)).self::BASE_URL_LIMIT;
+        $url = substr($requestUrl, 0, strpos($requestUrl, self::BASE_URL_LIMIT)).self::BASE_URL_LIMIT;
+
+        return $url;
     }
 
 }

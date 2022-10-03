@@ -6,5 +6,9 @@
             "App\\": "app/"
         }
     },
-    "require": {}
+    "require": {
+      "ext-curl": "*",
+      "ext-json": "*",
+      "ext-dom": "*"
+    }
 }
