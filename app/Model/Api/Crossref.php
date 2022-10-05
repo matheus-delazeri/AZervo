@@ -7,24 +7,55 @@ use App\Model\Api;
 class Crossref extends Api
 {
     const ENDPOINT = "http://api.crossref.org/works";
+    const ITEMS_PER_PAGE = 10;
+    const MAX_ITEMS = 9990;
+    public $FILTERS = array(
+        "title"  => "Título",
+        "author" => "Autor"
+    );
 
-    public function getResultsFound($query, $filter)
+    public function getQueryFilters()
     {
-        $results = array();
-        $params = array(
-            "query.$filter" => $query,
-            "sort" => "score",
-            "order" => "desc"
+        $queryFilters = array();
+        foreach ($this->FILTERS as $filter => $label){
+            if(isset($_GET[$filter])) {
+                $queryFilters["query.$filter"] = $_GET[$filter];
+            }
+        }
+
+        return $queryFilters;
+    }
+
+    public function getResultsFound($page)
+    {
+        $results = array(
+            "items" => array(),
+            "total_items" => 0
         );
+        $params = array(
+            "sort" => "score",
+            "order" => "desc",
+            "select" => "DOI,title,author,type",
+            "rows" => self::ITEMS_PER_PAGE,
+            "offset" => ($page-1) * self::ITEMS_PER_PAGE
+        );
+
+        $queryFilters = $this->getQueryFilters();
+        foreach ($queryFilters as $filter => $query) {
+            $params[$filter] = $query;
+        }
         $response = $this->call(self::ENDPOINT, $params);
-        $items = $response["message"]["items"];
-        foreach ($items as $item) {
-            $results[$item["DOI"]] = array(
-                "doi" => $item["DOI"],
-                "title" => isset($item["title"]) ? $item["title"][0] : $item["description"],
-                "type" => $item["type"],
-                "author" => $this->getAuthorsAsStr($item)
-            );
+        if($items = $response["message"]["items"]) {
+            foreach ($items as $item) {
+                $results["items"][] = array(
+                    "doi" => isset($item["DOI"]) ? $item["DOI"] : "",
+                    "title" => isset($item["title"]) ? $item["title"][0] : "",
+                    "type" => isset($item["type"]) ? $item["type"] : "",
+                    "author" => $this->getAuthorsAsStr($item)
+                );
+            }
+            $totalResults = $response["message"]["total-results"];
+            $results["total_items"] = min($totalResults, self::MAX_ITEMS);
         }
 
         return $results;

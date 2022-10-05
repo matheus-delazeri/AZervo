@@ -9,19 +9,8 @@ class Api
     public $DATASETS_MODELS = array(
         "scihub"
     );
-    public $FILTERS = array(
-        "title"  => "Título",
-        "author" => "Autor"
-    );
+
     const DATASETS_PATH = "api_datasets_";
-
-    public function getBasicResults($query, $filter)
-    {
-        $crossRef = AZervo::getModel("api_crossref");
-        $results = $crossRef->getResultsFound($query, $filter);
-
-        return json_encode($results);
-    }
 
     public function getResultsInDatasets($doi)
     {
@@ -64,8 +53,10 @@ class Api
 
     public function buildGETUrl($baseUrl, $params)
     {
+
         return empty($params)
             ? $baseUrl
             : $baseUrl . "?" . http_build_query($params);
     }
+
 }

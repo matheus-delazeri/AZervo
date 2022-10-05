@@ -1,6 +1,6 @@
 <?php
 $_AZervo = new \App\AZervo();
-$_api = new \App\Model\Api();
+$_crossRef = new \App\Model\Api\Crossref();
 ?>
 <html>
     <?php $_AZervo->loadBlock("header")?>
@@ -8,24 +8,25 @@ $_api = new \App\Model\Api();
         <?php $_AZervo->loadBlock("topHeader")?>
         <div class="row" style="align-items: center; height: 70%">
             <div class="col-md-4"></div>
-            <div class="col-md-4">
+            <div class="col-md-4" style="display: flex;flex-direction: column;justify-content: center">
                 <img width="100%" src="<?php echo $_AZervo->getSkinUrl('images/logo-desc.png')?>">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-                        <div class="dropdown-menu">
-                            <?php
-                                foreach ($_api->FILTERS as $filter => $label) {
-                                    echo "<a class='dropdown-item' filter='$filter' id='filter-$filter' href='#'>$label</a>";
-                                }
-                            ?>
-                        </div>
+                <?php
+                foreach ($_crossRef->FILTERS as $filter => $label) {
+                    echo '
+                    <div class="input-group mb-2">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text query-filter" filter="'.$filter.'">'.$label.'</span>
+                      </div>
+                      <input type="text" class="form-control" id="'.$filter.'" placeholder="Digite aqui...">
                     </div>
-                    <input type="text" class="form-control search-query" placeholder="Digite aqui..." aria-label="Digite o título ou autor do documento..." aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary btn-search" type="button">Buscar</button>
-                    </div>
-                </div>
+                    ';
+                }
+                ?>
+                <button type="button" class="btn btn-dark btn-search">
+                    Buscar
+                    <i class="fa fa-search"></i>
+                </button>
+                <br>
                 <div class="searching" style="display: none">
                     <span>Buscando resultados <img class="loading-gif" src='<?php echo $_AZervo->getSkinUrl("images/loading.gif")?>'></span>
                 </div>
@@ -33,32 +34,23 @@ $_api = new \App\Model\Api();
             <div class="col-md-4"></div>
         </div>
         <script type="text/javascript">
-            let searchFilter = "title"
-            jQuery(".dropdown-toggle").text(jQuery("#filter-title").text())
-            jQuery(".dropdown-item").click(function () {
-                jQuery(".dropdown-toggle").text(jQuery(this).text())
-                searchFilter = jQuery(this).attr("filter")
-            })
+
             jQuery(".btn-search").click(function() {
-                jQuery(".searching").show()
-                let searchUrl = "<?php echo $_AZervo->getUrl("search")?>"
-                let resultsUrl = "<?php echo $_AZervo->getUrl("search", "results")?>";
-                let searchQuery = jQuery(".search-query").val()
-                if(searchQuery !== "") {
-                    jQuery.ajax({
-                        url: searchUrl,
-                        method: "POST",
-                        data: {
-                            query: searchQuery,
-                            filter: searchFilter
-                        },
-                        dataType: "json",
-                        success: function (data){
-                            sessionStorage.setItem("azervo_results", JSON.stringify(data))
-                            jQuery(".searching").hide()
-                            window.location.replace(resultsUrl)
-                        }
-                    })
+                let queryParams = []
+                jQuery(".query-filter").each(function () {
+                    let filter = jQuery(this).attr("filter")
+                    let filterValue = jQuery(`#${filter}`).val()
+                    if(filterValue !== "") {
+                        queryParams.push(`${filter}=${filterValue}`)
+                    }
+                })
+                if(queryParams.length) {
+                    let query = queryParams.join("&")
+                    jQuery(".searching").show()
+                    let resultsUrl = "<?php echo $_AZervo->getUrl("search", "results")?>";
+                    resultsUrl += "?" + query + "&page=1"
+                    window.location.replace(resultsUrl)
+
                 } else {
                     alert("Digite algum valor na barra de busca")
                 }

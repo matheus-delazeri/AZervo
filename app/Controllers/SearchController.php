@@ -6,11 +6,6 @@ use App\AZervo;
 
 class SearchController
 {
-    public function indexAction()
-    {
-        echo AZervo::getModel("api")->getBasicResults($_POST["query"], $_POST["filter"]);
-    }
-
     public function resultsAction()
     {
         AZervo::loadView("results");
@@ -20,4 +15,5 @@ class SearchController
     {
         echo AZervo::getModel("api")->getResultsInDatasets($_POST["doi"]);
     }
+
 }

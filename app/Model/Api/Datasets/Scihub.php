@@ -24,7 +24,7 @@ class Scihub extends Api
 
         return $url != ""
             ? $url
-            : "Não encontrado";
+            : "Sci-Hub - Não encontrado";
     }
 
     private function parseLocationHref($htmlElement)
@@ -39,7 +39,7 @@ class Scihub extends Api
             }
         }
 
-        return "<a href='{$url}'>{$url}</a>";
+        return "<a href='{$url}'>Sci-Hub - Download</a>";
     }
 
 }

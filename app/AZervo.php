@@ -30,7 +30,7 @@ class AZervo
     static public function getUrl($controllerPath, $action = "index")
     {
         $controllerPath = $controllerPath == "index" ? "" : $controllerPath . "/";
-        $action = $action == "index" ? "" : $action;
+        $action = $action == "index" ? "" : $action. "/";
         return self::getBaseUrl() . $controllerPath . $action;
     }
 

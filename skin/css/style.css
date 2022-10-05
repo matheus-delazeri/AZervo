@@ -18,6 +18,11 @@ html {
     box-sizing: border-box;
     border-bottom: 1px solid #cecece;
 }
+.input-group-text {
+    color: #fff !important;
+    background-color: #343a40 !important;
+    border-color: #343a40 !important;
+}
 .searching {
     display: flex;
     justify-content: center;
@@ -39,15 +44,38 @@ html {
 }
 .results-table {
     display: block;
-    height: 80%;
-    margin: 2%;
+    height: 75%;
+    min-height: 75%;
+    margin: 0 2% 5% 2%;
     width: 100%;
-    overflow-y: scroll;
+    min-width: 95%;
+    overflow-y: auto;
     table-layout: fixed;
 }
-
+.pagination {
+    margin: 0;
+}
+.page-link {
+    color: #444444 !important;
+}
+.page-link:hover {
+    font-weight: bold;
+}
 .results-table td {
     overflow-wrap: anywhere;
+}
+tr.result td {
+    vertical-align: middle;
+    line-height: 1;
+}
+
+.list-group-item {
+    background: transparent;
+}
+.page-item.active .page-link, .page-item.disabled .page-link{
+    pointer-events: none;
+    background: #e9ecef !important;
+    border-color: #e9ecef !important;
 }
 img.logo {
     width: 50%;
