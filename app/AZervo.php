@@ -30,7 +30,7 @@ class AZervo
     static public function getUrl($controllerPath, $action = "index")
     {
         $controllerPath = $controllerPath == "index" ? "" : $controllerPath . "/";
-        $action = $action == "index" ? "" : $action. "/";
+        $action = $action == "index" ? "" : $action . "/";
         return self::getBaseUrl() . $controllerPath . $action;
     }
 
@@ -50,27 +50,32 @@ class AZervo
         $controllerPath = explode(self::PATH_SEPARATOR, array_shift($urlParams));
         $controllerPath = !$controllerPath[0] ? array("Index") : $controllerPath;
         $controllerPath = array_map('ucfirst', $controllerPath);
-        $namespace = $controllerPrefix . implode("\\", $controllerPath)."Controller";
+        $namespace = $controllerPrefix . implode("\\", $controllerPath) . "Controller";
 
         $actionName = ucfirst(array_shift($urlParams));
-        $actionName = $actionName == "" ? "IndexAction" : $actionName."Action";
+        $actionName = $actionName == "" ? "IndexAction" : $actionName . "Action";
 
         $controller = new $namespace;
         $controller->$actionName();
     }
 
+    static public function getProtocol()
+    {
+        return !isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != 'on' ? "http://" : "https://";
+    }
+
     static public function getCurrentUrl()
     {
-        return 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+        return self::getProtocol() . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     }
 
     static public function getBaseUrl()
     {
         $requestUrl = self::getCurrentUrl();
-        if(strpos($requestUrl, self::BASE_URL_LIMIT) !== false) {
+        if (strpos($requestUrl, self::BASE_URL_LIMIT) !== false) {
             $url = substr($requestUrl, 0, strpos($requestUrl, self::BASE_URL_LIMIT)) . self::BASE_URL_LIMIT;
         } else {
-            $url = 'http://'.$_SERVER['HTTP_HOST'].'/';
+            $url = self::getProtocol() . $_SERVER['HTTP_HOST'] . '/';
         }
 
         return $url;

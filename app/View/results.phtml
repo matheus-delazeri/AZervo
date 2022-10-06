@@ -11,6 +11,7 @@ $_maxPageLinks = 20;
 <body>
 <?php $_AZervo->loadBlock("topHeader") ?>
 <div class="row" style="height: 100%; justify-content: center">
+    <?php if($_results['total_items'] > 0): ?>
     <nav aria-label="Navegar" style="align-self: center">
         <p style="margin: 0;text-align: center">Total de itens encontrados: <b><?php echo $_results['total_items']?></b></p>
         <p style="text-align: center">Total de páginas: <b><?php echo $_totalPages?></b></p>
@@ -74,6 +75,9 @@ $_maxPageLinks = 20;
         ?>
         </tbody>
     </table>
+    <?php else: # If no result found
+        $_AZervo->loadBlocK('noResult');
+    endif;?>
 </div>
 
 <script type="text/javascript">

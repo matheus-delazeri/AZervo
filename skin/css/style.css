@@ -53,6 +53,7 @@ html {
     table-layout: fixed;
 }
 .pagination {
+    justify-content: center;
     margin: 0;
 }
 .page-link {
