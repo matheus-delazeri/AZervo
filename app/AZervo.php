@@ -67,7 +67,11 @@ class AZervo
     static public function getBaseUrl()
     {
         $requestUrl = self::getCurrentUrl();
-        $url = substr($requestUrl, 0, strpos($requestUrl, self::BASE_URL_LIMIT)).self::BASE_URL_LIMIT;
+        if(strpos($requestUrl, self::BASE_URL_LIMIT) !== false) {
+            $url = substr($requestUrl, 0, strpos($requestUrl, self::BASE_URL_LIMIT)) . self::BASE_URL_LIMIT;
+        } else {
+            $url = 'http://'.$_SERVER['HTTP_HOST'];
+        }
 
         return $url;
     }
