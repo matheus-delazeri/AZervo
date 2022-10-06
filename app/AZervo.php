@@ -70,7 +70,7 @@ class AZervo
         if(strpos($requestUrl, self::BASE_URL_LIMIT) !== false) {
             $url = substr($requestUrl, 0, strpos($requestUrl, self::BASE_URL_LIMIT)) . self::BASE_URL_LIMIT;
         } else {
-            $url = 'http://'.$_SERVER['HTTP_HOST'];
+            $url = 'http://'.$_SERVER['HTTP_HOST'].'/';
         }
 
         return $url;
