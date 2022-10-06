@@ -29,6 +29,10 @@ class Api
         $curl = $this->buildCurl($url);
 
         $response = curl_exec($curl);
+        $info = curl_getinfo($curl);
+        if($info['http_code'] != "200") {
+            var_dump($info);
+        }
         if($jsonReturn) $response = json_decode($response, true);
         curl_close($curl);
 
@@ -42,9 +46,8 @@ class Api
         curl_setopt_array($curl, array(
             CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_SSL_VERIFYHOST => 0,
-            CURLOPT_SSL_VERIFYPEER => 0,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_SSL_VERIFYHOST => false,
+            CURLOPT_SSL_VERIFYPEER => false,
             CURLOPT_CUSTOMREQUEST => "GET"
         ));
 
