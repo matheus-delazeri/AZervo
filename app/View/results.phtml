@@ -4,15 +4,15 @@ $_currentPage = isset($_GET["page"]) ? $_GET["page"] : 1;
 $_results = $_AZervo->getModel("api_crossref")->getResultsFound($_currentPage);
 $_itemsPerPage = \App\Model\Api\Crossref::ITEMS_PER_PAGE;
 $_totalPages = ceil($_results["total_items"] / $_itemsPerPage);
-$_maxPageLinks = 20;
+$_maxPageLinks = 15;
 ?>
 <html>
 <?php $_AZervo->loadBlock("header") ?>
 <body>
 <?php $_AZervo->loadBlock("topHeader") ?>
-<div class="row" style="height: 100%; justify-content: center">
+<div class="row results-page">
     <?php if($_results['total_items'] > 0): ?>
-    <nav aria-label="Navegar" style="align-self: center">
+    <nav aria-label="Navegar">
         <p style="margin: 0;text-align: center">Total de itens encontrados: <b><?php echo $_results['total_items']?></b></p>
         <p style="text-align: center">Total de páginas: <b><?php echo $_totalPages?></b></p>
         <ul class="pagination">
@@ -50,14 +50,11 @@ $_maxPageLinks = 20;
             </li>
         </ul>
     </nav>
-    <table class="table table-striped results-table">
+    <table class="table table-striped">
         <thead>
         <tr>
-            <th style="min-width: 15%; width: 15%" scope="col">DOI</th>
-            <th style="min-width: 20%; width: 20%" scope="col">Autor</th>
-            <th style="min-width: 40%; width: 40%" scope="col">Título</th>
-            <th style="min-width: 10%; width: 10%" scope="col">Categoria</th>
-            <th style="min-width: 15%; width: 15%" scope="col">Links</th>
+            <th style="min-width: 75%; width: 75%" scope="col">Documento</th>
+            <th style="min-width: 25%; width: 25%" scope="col">Links</th>
         </tr>
         </thead>
         <tbody>
@@ -65,10 +62,12 @@ $_maxPageLinks = 20;
         $loadingGif = $_AZervo->getSkinUrl('images/loading.gif');
         foreach ($_results["items"] as $item) {
             echo "<tr class='result' doi='{$item['doi']}'>
-                <td>{$item['doi']}</td>
-                <td>{$item['author']}</td>
-                <td>{$item['title']}</td>
-                <td>{$item['type']}</td>
+                <td>
+                    <p><b>DOI:</b> {$item['doi']}</p>
+                    <p><b>Título:</b> {$item['title']}</p>
+                    <p><b>Autores:</b> {$item['author']}</p>
+                    <p><b>Tipo:</b> {$item['type']}</p>
+                </td>
                 <td class='results-links'><img class='loading-gif' src='$loadingGif'></td>
             </tr>";
         }

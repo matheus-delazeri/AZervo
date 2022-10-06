@@ -2,15 +2,11 @@ html, body{
     height: 100%;
 }
 
-html {
-    overflow: hidden;
-}
-
 .row {
     margin: 0;
 }
 .top-header {
-    padding: 0 2%;
+    padding: 10px;
     width: 100%;
     background-color: #ffffff;
     -webkit-box-sizing: border-box;
@@ -42,22 +38,29 @@ html {
 .top-menu a {
     margin: 0 5%;
 }
-.results-table {
-    display: block;
-    height: 75%;
-    min-height: 75%;
-    margin: 0 2% 5% 2%;
-    width: 100%;
-    min-width: 95%;
-    overflow-y: auto;
-    table-layout: fixed;
+nav {
+    align-self: center;
+    margin: 20px 5px;
+}
+.results-page {
+    justify-content: center;
+    height: max-content;
+    margin: 0 5%;
 }
 .pagination {
     justify-content: center;
     margin: 0;
+    flex-wrap: wrap;
 }
 .page-link {
     color: #444444 !important;
+}
+li.page-item {
+    margin-top: 5px;
+
+}
+li.list-group-item {
+    padding: 0;
 }
 .page-link:hover {
     font-weight: bold;
@@ -84,6 +87,10 @@ img.logo {
 
 @media only screen and (max-width: 990px) {
     img.logo {
-        width: 100%;
+        width: 80%;
+        margin: 0 10%;
+    }
+    .result {
+        font-size: 13px;
     }
 }

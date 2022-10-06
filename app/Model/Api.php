@@ -10,6 +10,8 @@ class Api
         "scihub"
     );
 
+    const ERROR_ICON_CLASS = "fa fa-close";
+    const DOWNLOAD_ICON_CLASS = "fa fa-download";
     const DATASETS_PATH = "api_datasets_";
 
     public function getResultsInDatasets($doi)
