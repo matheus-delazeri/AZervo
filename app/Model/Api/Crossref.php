@@ -35,7 +35,7 @@ class Crossref extends Api
         $params = array(
             "sort" => "score",
             "order" => "desc",
-            "select" => "DOI,title,author,type",
+            "select" => "DOI,title,author,type,subject,ISBN",
             "rows" => self::ITEMS_PER_PAGE,
             "offset" => ($page-1) * self::ITEMS_PER_PAGE
         );
@@ -48,9 +48,11 @@ class Crossref extends Api
         if($items = $response["message"]["items"]) {
             foreach ($items as $item) {
                 $results["items"][] = array(
-                    "doi" => isset($item["DOI"]) ? $item["DOI"] : "",
-                    "title" => isset($item["title"]) ? $item["title"][0] : "",
-                    "type" => isset($item["type"]) ? $item["type"] : "",
+                    "doi" => isset($item["DOI"]) ? $item["DOI"] : "-",
+                    "title" => isset($item["title"]) ? $item["title"][0] : "-",
+                    "type" => isset($item["type"]) ? $item["type"] : "-",
+                    "subject" => isset($item["subject"]) ? implode(", ", $item["subject"]) : "-",
+                    "isbn" => isset($item["ISBN"]) ? implode(", ", $item["ISBN"]) : "-",
                     "author" => $this->getAuthorsAsStr($item)
                 );
             }
@@ -82,6 +84,6 @@ class Crossref extends Api
             }
         }
 
-        return implode(", ", $authorsStrArr);
+        return !empty($authorsStrArr) ? implode(", ", $authorsStrArr) : "-";
     }
 }

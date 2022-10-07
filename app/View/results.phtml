@@ -66,7 +66,9 @@ $_maxPageLinks = 15;
                     <p><b>DOI:</b> {$item['doi']}</p>
                     <p><b>Título:</b> {$item['title']}</p>
                     <p><b>Autores:</b> {$item['author']}</p>
+                    <p><b>Assunto:</b> {$item['subject']}</p>
                     <p><b>Tipo:</b> {$item['type']}</p>
+                    <p><b>ISBN:</b> {$item['isbn']}</p>
                 </td>
                 <td class='results-links'><img class='loading-gif' src='$loadingGif'></td>
             </tr>";
@@ -130,7 +132,8 @@ $_maxPageLinks = 15;
                     doi: doi
                 },
                 dataType: "json",
-                error: function () {
+                error: function (error) {
+                    console.log(error)
                     let resultsEl = jQuery($this).find('.results-links')
                     jQuery(resultsEl).html("Tempo excedido")
                 },

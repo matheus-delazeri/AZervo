@@ -32,7 +32,7 @@ class Api
 
         $response = curl_exec($curl);
         $info = curl_getinfo($curl);
-        if($info['http_code'] != "200") {
+        if(!in_array($info['http_code'], array("200", "302"))) {
             var_dump($info);
         }
         if($jsonReturn) $response = json_decode($response, true);
