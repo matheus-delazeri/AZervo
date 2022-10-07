@@ -2,6 +2,7 @@
 
 namespace App\Model\Api\Datasets;
 
+use App\AZervo;
 use App\Model\Api;
 
 class Scihub extends Api
@@ -33,7 +34,7 @@ class Scihub extends Api
         if(strpos($htmlElement, "location.href='/") !== false) {
             $suffix = str_replace(array("location.href='/", "'"), "", $htmlElement);
             if($suffix[0] == "/") { # Means that is a full URL, no need to append prefix
-                $url = "http://" . substr($suffix, 1);
+                $url = AZervo::getProtocol() . substr($suffix, 1);
             } else {
                 $url = self::URL_PREFIX . $suffix;
             }
