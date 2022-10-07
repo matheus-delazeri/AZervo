@@ -1,17 +1,20 @@
 <?php
-$_AZervo = new \App\AZervo();
-$_crossRef = new \App\Model\Api\Crossref();
+
+use App\AZervo;
+use App\Model\Api\Crossref;
+
+$_crossRef = new Crossref();
 ?>
-<html>
-    <?php $_AZervo->loadBlock("header")?>
+<html lang="">
+    <?php AZervo::loadBlock("header")?>
     <body>
-        <?php $_AZervo->loadBlock("topHeader")?>
+        <?php AZervo::loadBlock("topHeader")?>
         <div class="row" style="align-items: center; height: 70%">
             <div class="col-md-4"></div>
             <div class="col-md-4" style="display: flex;flex-direction: column;justify-content: center">
-                <img width="100%" src="<?php echo $_AZervo->getSkinUrl('images/logo-desc.png')?>">
+                <img width="100%" src="<?php echo AZervo::getSkinUrl('images/logo-desc.png')?>" alt="">
                 <?php
-                foreach ($_crossRef->FILTERS as $filter => $label) {
+                foreach (Crossref::FILTERS as $filter => $label) {
                     echo '
                     <div class="input-group mb-2">
                       <div class="input-group-prepend">
@@ -28,7 +31,7 @@ $_crossRef = new \App\Model\Api\Crossref();
                 </button>
                 <br>
                 <div class="searching" style="display: none">
-                    <span>Buscando resultados <img class="loading-gif" src='<?php echo $_AZervo->getSkinUrl("images/loading.gif")?>'></span>
+                    <span>Buscando resultados <img class="loading-gif" src='<?php echo AZervo::getSkinUrl("images/loading.gif")?>' alt=""></span>
                 </div>
             </div>
             <div class="col-md-4"></div>
@@ -47,7 +50,7 @@ $_crossRef = new \App\Model\Api\Crossref();
                 if(queryParams.length) {
                     let query = queryParams.join("&")
                     jQuery(".searching").show()
-                    let resultsUrl = "<?php echo $_AZervo->getUrl("search", "results")?>";
+                    let resultsUrl = "<?php echo AZervo::getUrl("search", "results")?>";
                     resultsUrl += "?" + query + "&page=1"
                     window.location.replace(resultsUrl)
 

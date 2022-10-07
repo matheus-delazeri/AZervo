@@ -1,15 +1,16 @@
 <?php
-$_AZervo = new \App\AZervo();
+use App\AZervo;
+
 ?>
 <div class="row top-header">
     <div class="col-md-3 col-sm-12">
-        <a href="<?php echo $_AZervo->getUrl('index')?>">
-            <img class="logo" src="<?php echo $_AZervo->getSkinUrl("images/logo.png") ?>">
+        <a href="<?php echo AZervo::getUrl('index')?>">
+            <img class="logo" src="<?php echo AZervo::getSkinUrl("images/logo.png") ?>" alt="">
         </a>
     </div>
     <div class="col-md-6"></div>
     <div class="col-md-3 top-menu" style="display: flex; align-items: center; justify-content: end">
-        <a href="<?php echo $_AZervo->getUrl('index')?>">Início</a>
+        <a href="<?php echo AZervo::getUrl('index')?>">Início</a>
         <a target="_blank" href="https://github.com/matheus-delazeri/AZervo">GitHub</a>
     </div>
 </div>

@@ -1,5 +1,7 @@
 <?php
+
+use App\AZervo;
+
 require_once('vendor/autoload.php');
 
-$AZervo = new \App\AZervo;
-$AZervo->runActionByUrl();
+AZervo::runActionByUrl();

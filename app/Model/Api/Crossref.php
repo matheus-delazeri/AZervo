@@ -9,15 +9,15 @@ class Crossref extends Api
     const ENDPOINT = "http://api.crossref.org/works";
     const ITEMS_PER_PAGE = 10;
     const MAX_ITEMS = 9990;
-    public $FILTERS = array(
+    const FILTERS = array(
         "title"  => "Título",
         "author" => "Autor"
     );
 
-    public function getQueryFilters()
+    public function getQueryFilters(): array
     {
         $queryFilters = array();
-        foreach ($this->FILTERS as $filter => $label){
+        foreach (self::FILTERS as $filter => $label){
             if(isset($_GET[$filter])) {
                 $queryFilters["query.$filter"] = $_GET[$filter];
             }
@@ -26,7 +26,7 @@ class Crossref extends Api
         return $queryFilters;
     }
 
-    public function getResultsFound($page)
+    public function getResultsFound($page): array
     {
         $results = array(
             "items" => array(),
@@ -48,9 +48,9 @@ class Crossref extends Api
         if($items = $response["message"]["items"]) {
             foreach ($items as $item) {
                 $results["items"][] = array(
-                    "doi" => isset($item["DOI"]) ? $item["DOI"] : "-",
+                    "doi" => $item["DOI"] ?? "-",
                     "title" => isset($item["title"]) ? $item["title"][0] : "-",
-                    "type" => isset($item["type"]) ? $item["type"] : "-",
+                    "type" => $item["type"] ?? "-",
                     "subject" => isset($item["subject"]) ? implode(", ", $item["subject"]) : "-",
                     "isbn" => isset($item["ISBN"]) ? implode(", ", $item["ISBN"]) : "-",
                     "author" => $this->getAuthorsAsStr($item)
@@ -63,7 +63,7 @@ class Crossref extends Api
         return $results;
     }
 
-    private function getAuthorsAsStr($item)
+    private function getAuthorsAsStr($item): string
     {
         $authorsStrArr = array();
         if (isset($item["author"])) {

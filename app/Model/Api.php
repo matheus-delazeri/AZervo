@@ -3,10 +3,11 @@
 namespace App\Model;
 
 use App\AZervo;
+use CurlHandle;
 
 class Api
 {
-    public $DATASETS_MODELS = array(
+    const DATASETS_MODELS = array(
         "scihub"
     );
 
@@ -14,10 +15,10 @@ class Api
     const DOWNLOAD_ICON_CLASS = "fa fa-download";
     const DATASETS_PATH = "api_datasets_";
 
-    public function getResultsInDatasets($doi)
+    public function getResultsInDatasets($doi): bool|string
     {
         $results = array();
-        foreach ($this->DATASETS_MODELS as $modelName) {
+        foreach (self::DATASETS_MODELS as $modelName) {
             $dataset = AZervo::getModel(self::DATASETS_PATH.$modelName);
             $results[$modelName] = $dataset->getDownloadURL($doi);
         }
@@ -41,7 +42,7 @@ class Api
         return $response;
     }
 
-    private function buildCurl($url)
+    private function buildCurl($url): CurlHandle|bool
     {
         $curl = curl_init();
 

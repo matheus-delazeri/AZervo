@@ -1,15 +1,16 @@
 <?php
-$_AZervo = new \App\AZervo();
+use App\AZervo;
+
 ?>
 <head>
     <meta charset="UTF-8">
     <title>AZervo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="<?php echo $_AZervo->getSkinUrl("images/favicon.png")?>">
-    <link rel="stylesheet" href="<?php echo $_AZervo->getSkinUrl("css/font-awesome/css/font-awesome.min.css")?>">
-    <link rel="stylesheet" href="<?php echo $_AZervo->getSkinUrl("css/bootstrap/bootstrap.min.css")?>">
-    <link rel="stylesheet" href="<?php echo $_AZervo->getSkinUrl("css/style.css")?>">
-    <script src="<?php echo $_AZervo->getSkinUrl("js/jquery.min.js")?>"></script>
-    <script src="<?php echo $_AZervo->getSkinUrl("js/popper.min.js")?>"></script>
-    <script src="<?php echo $_AZervo->getSkinUrl("js/bootstrap.min.js")?>"></script>
+    <link rel="icon" type="image/x-icon" href="<?php echo AZervo::getSkinUrl("images/favicon.png")?>">
+    <link rel="stylesheet" href="<?php echo AZervo::getSkinUrl("css/font-awesome/css/font-awesome.min.css")?>">
+    <link rel="stylesheet" href="<?php echo AZervo::getSkinUrl("css/bootstrap/bootstrap.min.css")?>">
+    <link rel="stylesheet" href="<?php echo AZervo::getSkinUrl("css/style.css")?>">
+    <script src="<?php echo AZervo::getSkinUrl("js/jquery.min.js")?>"></script>
+    <script src="<?php echo AZervo::getSkinUrl("js/popper.min.js")?>"></script>
+    <script src="<?php echo AZervo::getSkinUrl("js/bootstrap.min.js")?>"></script>
 </head>

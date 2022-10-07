@@ -1,15 +1,18 @@
 <?php
-$_AZervo = new \App\AZervo();
-$_currentPage = isset($_GET["page"]) ? $_GET["page"] : 1;
-$_results = $_AZervo->getModel("api_crossref")->getResultsFound($_currentPage);
-$_itemsPerPage = \App\Model\Api\Crossref::ITEMS_PER_PAGE;
+
+use App\AZervo;
+use App\Model\Api\Crossref;
+
+$_currentPage = $_GET["page"] ?? 1;
+$_results = AZervo::getModel("api_crossref")->getResultsFound($_currentPage);
+$_itemsPerPage = Crossref::ITEMS_PER_PAGE;
 $_totalPages = ceil($_results["total_items"] / $_itemsPerPage);
 $_maxPageLinks = 15;
 ?>
-<html>
-<?php $_AZervo->loadBlock("header") ?>
+<html lang="">
+<?php AZervo::loadBlock("header") ?>
 <body>
-<?php $_AZervo->loadBlock("topHeader") ?>
+<?php AZervo::loadBlock("topHeader") ?>
 <div class="row results-page">
     <?php if($_results['total_items'] > 0): ?>
     <nav aria-label="Navegar">
@@ -59,7 +62,7 @@ $_maxPageLinks = 15;
         </thead>
         <tbody>
         <?php
-        $loadingGif = $_AZervo->getSkinUrl('images/loading.gif');
+        $loadingGif = AZervo::getSkinUrl('images/loading.gif');
         foreach ($_results["items"] as $item) {
             echo "<tr class='result' doi='{$item['doi']}'>
                 <td>
@@ -70,21 +73,21 @@ $_maxPageLinks = 15;
                     <p><b>Tipo:</b> {$item['type']}</p>
                     <p><b>ISBN:</b> {$item['isbn']}</p>
                 </td>
-                <td class='results-links'><img class='loading-gif' src='$loadingGif'></td>
+                <td class='results-links'><img class='loading-gif' src='$loadingGif' alt=''></td>
             </tr>";
         }
         ?>
         </tbody>
     </table>
     <?php else: # If no result found
-        $_AZervo->loadBlocK('noResult');
+        AZervo::loadBlocK('noResult');
     endif;?>
 </div>
 
 <script type="text/javascript">
     function replaceQueryParam(param, newval, search) {
-        var regex = new RegExp("([?;&])" + param + "[^&;]*[;&]?");
-        var query = search.replace(regex, "$1").replace(/&$/, '');
+        const regex = new RegExp("([?;&])" + param + "[^&;]*[;&]?");
+        const query = search.replace(regex, "$1").replace(/&$/, '');
 
         return (query.length > 2 ? query + "&" : "?") + (newval ? param + "=" + newval : '');
     }
@@ -126,7 +129,7 @@ $_maxPageLinks = 15;
             let doi = jQuery(this).attr("doi")
             let $this = this
             jQuery.ajax({
-                url: '<?php echo $_AZervo::getUrl("search", "inDatasets")?>',
+                url: '<?php echo AZervo::getUrl("search", "inDatasets")?>',
                 method: "POST",
                 data: {
                     doi: doi

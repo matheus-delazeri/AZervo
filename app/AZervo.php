@@ -27,22 +27,22 @@ class AZervo
         return self::loadView("Block/$path", $extension);
     }
 
-    static public function getUrl($controllerPath, $action = "index")
+    static public function getUrl($controllerPath, $action = "index"): string
     {
         $controllerPath = $controllerPath == "index" ? "" : $controllerPath . "/";
         $action = $action == "index" ? "" : $action . "/";
         return self::getBaseUrl() . $controllerPath . $action;
     }
 
-    static public function getSkinUrl($path)
+    static public function getSkinUrl($path): string
     {
         return self::getBaseUrl() . "skin/" . $path;
     }
 
-    public function runActionByUrl()
+   static public function runActionByUrl()
     {
-        $baseUrl = $this->getBaseUrl();
-        $requestString = substr($this->getCurrentUrl(), strlen($baseUrl));
+        $baseUrl = self::getBaseUrl();
+        $requestString = substr(self::getCurrentUrl(), strlen($baseUrl));
 
         $urlParams = explode('/', $requestString);
 
@@ -59,7 +59,7 @@ class AZervo
         $controller->$actionName();
     }
 
-    static public function getProtocol()
+    static public function getProtocol(): string
     {
         $isSecure = false;
         if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
@@ -71,15 +71,15 @@ class AZervo
         return $isSecure ? 'https://' : 'http://';
     }
 
-    static public function getCurrentUrl()
+    static public function getCurrentUrl(): string
     {
         return self::getProtocol() . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     }
 
-    static public function getBaseUrl()
+    static public function getBaseUrl(): string
     {
         $requestUrl = self::getCurrentUrl();
-        if (strpos($requestUrl, self::BASE_URL_LIMIT) !== false) {
+        if (str_contains($requestUrl, self::BASE_URL_LIMIT)) {
             $url = substr($requestUrl, 0, strpos($requestUrl, self::BASE_URL_LIMIT)) . self::BASE_URL_LIMIT;
         } else {
             $url = self::getProtocol() . $_SERVER['HTTP_HOST'] . '/';
