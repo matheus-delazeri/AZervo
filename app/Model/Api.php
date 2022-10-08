@@ -3,7 +3,6 @@
 namespace App\Model;
 
 use App\AZervo;
-use CurlHandle;
 
 class Api
 {
@@ -15,7 +14,7 @@ class Api
     const DOWNLOAD_ICON_CLASS = "fa fa-download";
     const DATASETS_PATH = "api_datasets_";
 
-    public function getResultsInDatasets($doi): bool|string
+    public function getResultsInDatasets($doi)
     {
         $results = array();
         foreach (self::DATASETS_MODELS as $modelName) {
@@ -42,7 +41,7 @@ class Api
         return $response;
     }
 
-    private function buildCurl($url): CurlHandle|bool
+    private function buildCurl($url)
     {
         $curl = curl_init();
 

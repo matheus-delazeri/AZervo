@@ -136,7 +136,6 @@ $_maxPageLinks = 15;
                 },
                 dataType: "json",
                 error: function (error) {
-                    console.log(error)
                     let resultsEl = jQuery($this).find('.results-links')
                     jQuery(resultsEl).html("Tempo excedido")
                 },

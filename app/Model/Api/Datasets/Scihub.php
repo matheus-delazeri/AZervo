@@ -32,7 +32,7 @@ class Scihub extends Api
     private function parseLocationHref($htmlElement): string
     {
         $url = "";
-        if(str_contains($htmlElement, "location.href='/")) {
+        if(strpos($htmlElement, "location.href='/") !== false) {
             $suffix = str_replace(array("location.href='/", "'"), "", $htmlElement);
             if($suffix[0] == "/") { # Means that is a full URL, no need to append prefix
                 $url = AZervo::getProtocol() . substr($suffix, 1);

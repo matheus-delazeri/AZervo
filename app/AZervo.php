@@ -39,7 +39,7 @@ class AZervo
         return self::getBaseUrl() . "skin/" . $path;
     }
 
-   static public function runActionByUrl()
+    static public function runActionByUrl()
     {
         $baseUrl = self::getBaseUrl();
         $requestString = substr(self::getCurrentUrl(), strlen($baseUrl));
@@ -64,8 +64,7 @@ class AZervo
         $isSecure = false;
         if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
             $isSecure = true;
-        }
-        elseif (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' || !empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on') {
+        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' || !empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on') {
             $isSecure = true;
         }
         return $isSecure ? 'https://' : 'http://';
@@ -79,7 +78,7 @@ class AZervo
     static public function getBaseUrl(): string
     {
         $requestUrl = self::getCurrentUrl();
-        if (str_contains($requestUrl, self::BASE_URL_LIMIT)) {
+        if (strpos($requestUrl, self::BASE_URL_LIMIT) !== false) {
             $url = substr($requestUrl, 0, strpos($requestUrl, self::BASE_URL_LIMIT)) . self::BASE_URL_LIMIT;
         } else {
             $url = self::getProtocol() . $_SERVER['HTTP_HOST'] . '/';
