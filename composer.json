@@ -9,6 +9,10 @@
     "require": {
       "ext-curl": "*",
       "ext-json": "*",
-      "ext-dom": "*"
+      "ext-dom": "*",
+      "ext-simplexml": "*",
+      "ext-libxml": "*",
+      "ext-readline": "*",
+      "ext-mysqli": "*"
     }
 }

@@ -1,0 +1,28 @@
+<?php
+
+use App\AZervo;
+
+$_userId = $_SESSION['user_id'];
+
+?>
+<div class="row" style="height: 70%; padding: 2% 0">
+    <?php if ($_userId): ?>
+        <div class="col-md-2"></div>
+        <div class="col-md-8" style="display: flex; flex-direction: column;">
+            <h3>Minha Conta</h3>
+            <br>
+            <?php
+               if($_user = AZervo::getModel("user")->load($_userId)) {
+                   echo "
+                        <p><b>E-mail:</b> {$_user['email']}</p>
+                        <p><b>Nome:</b> {$_user['name']}</p>
+                    ";
+               }
+            ?>
+        </div>
+        <div class="col-md-2"></div>
+
+    <?php else: ?>
+        <p>Faça login para acessar a sua conta.</p>
+    <?php endif; ?>
+</div>

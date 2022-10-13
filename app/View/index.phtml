@@ -5,59 +5,54 @@ use App\Model\Api\Crossref;
 
 $_crossRef = new Crossref();
 ?>
-<html lang="">
-    <?php AZervo::loadBlock("header")?>
-    <body>
-        <?php AZervo::loadBlock("topHeader")?>
-        <div class="row" style="align-items: center; height: 70%">
-            <div class="col-md-4"></div>
-            <div class="col-md-4" style="display: flex;flex-direction: column;justify-content: center">
-                <img width="100%" src="<?php echo AZervo::getSkinUrl('images/logo-desc.png')?>" alt="">
-                <?php
-                foreach (Crossref::FILTERS as $filter => $label) {
-                    echo '
+<div class="row" style="align-items: center; height: 70%">
+    <div class="col-md-4"></div>
+    <div class="col-md-4" style="display: flex;flex-direction: column;justify-content: center">
+        <img width="100%" src="<?php echo AZervo::getSkinUrl('images/logo-desc.png') ?>" alt="">
+        <?php
+        foreach (Crossref::FILTERS as $filter => $label) {
+            echo '
                     <div class="input-group mb-2">
                       <div class="input-group-prepend">
-                        <span class="input-group-text query-filter" filter="'.$filter.'">'.$label.'</span>
+                        <span class="input-group-text query-filter" filter="' . $filter . '">' . $label . '</span>
                       </div>
-                      <input type="text" class="form-control" id="'.$filter.'" placeholder="Digite aqui...">
+                      <input type="text" class="form-control" id="' . $filter . '" placeholder="Digite aqui...">
                     </div>
                     ';
-                }
-                ?>
-                <button type="button" class="btn btn-dark btn-search">
-                    Buscar
-                    <i class="fa fa-search"></i>
-                </button>
-                <br>
-                <div class="searching" style="display: none">
-                    <span>Buscando resultados <img class="loading-gif" src='<?php echo AZervo::getSkinUrl("images/loading.gif")?>' alt=""></span>
-                </div>
-            </div>
-            <div class="col-md-4"></div>
+        }
+        ?>
+        <button type="button" class="btn btn-dark btn-search">
+            Buscar
+            <i class="fa fa-search"></i>
+        </button>
+        <br>
+        <div class="searching" style="display: none">
+            <span>Buscando resultados <img class="loading-gif"
+                                           src='<?php echo AZervo::getSkinUrl("images/loading.gif") ?>' alt=""></span>
         </div>
-        <script type="text/javascript">
+    </div>
+    <div class="col-md-4"></div>
+</div>
+<script type="text/javascript">
 
-            jQuery(".btn-search").click(function() {
-                let queryParams = []
-                jQuery(".query-filter").each(function () {
-                    let filter = jQuery(this).attr("filter")
-                    let filterValue = jQuery(`#${filter}`).val()
-                    if(filterValue !== "") {
-                        queryParams.push(`${filter}=${filterValue}`)
-                    }
-                })
-                if(queryParams.length) {
-                    let query = queryParams.join("&")
-                    jQuery(".searching").show()
-                    let resultsUrl = "<?php echo AZervo::getUrl("search", "results")?>";
-                    resultsUrl += "?" + query + "&page=1"
-                    window.location.replace(resultsUrl)
+    jQuery(".btn-search").click(function () {
+        let queryParams = []
+        jQuery(".query-filter").each(function () {
+            let filter = jQuery(this).attr("filter")
+            let filterValue = jQuery(`#${filter}`).val()
+            if (filterValue !== "") {
+                queryParams.push(`${filter}=${filterValue}`)
+            }
+        })
+        if (queryParams.length) {
+            let query = queryParams.join("&")
+            jQuery(".searching").show()
+            let resultsUrl = "<?php echo AZervo::getUrl("search", "results")?>";
+            resultsUrl += "?" + query + "&page=1"
+            window.location.replace(resultsUrl)
 
-                } else {
-                    alert("Digite algum valor na barra de busca")
-                }
-            })
-        </script>
-    </body>
-</html>
+        } else {
+            alert("Digite algum valor na barra de busca")
+        }
+    })
+</script>

@@ -1,0 +1,15 @@
+{
+  "config": {
+    "db": {
+      "connection": {
+        "host": "",
+        "user": "",
+        "password": "",
+        "dbname": ""
+      },
+      "tables": [
+        "users"
+      ]
+    }
+  }
+}

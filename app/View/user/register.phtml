@@ -1,0 +1,53 @@
+<?php
+use App\AZervo;
+
+AZervo::getModel("core");
+?>
+<div class="row" style="align-items: center; height: 70%">
+    <div class="col-md-4"></div>
+    <div class="col-md-4" style="display: flex; flex-direction: column;justify-content: center">
+        <div class="input-group mb-2">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Nome</span>
+            </div>
+            <input type="text" class="form-control" id="name" placeholder="Digite seu nome...">
+        </div>
+        <div class="input-group mb-2">
+            <div class="input-group-prepend">
+                <span class="input-group-text">E-mail</span>
+            </div>
+            <input type="email" class="form-control" id="email" placeholder="Digite seu e-mail...">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Senha</span>
+            </div>
+            <input type="password" class="form-control" id="password" placeholder="Digite sua senha...">
+        </div>
+        <button type="button" class="btn btn-dark" id="btn-login">
+            Registrar
+            <i class="fa fa-user"></i>
+        </button>
+    </div>
+    <div class="col-md-4"></div>
+</div>
+<script>
+    jQuery("#btn-login").click(function () {
+        jQuery.ajax({
+            url: '<?php echo AZervo::getUrl('user', 'create')?>',
+            method: "POST",
+            data: {
+                name: jQuery("#name").val(),
+                email: jQuery("#email").val(),
+                password: jQuery("#password").val()
+            },
+            success: function (created) {
+                if(parseInt(created)) {
+                    window.location.href = '<?php echo AZervo::getUrl('user', 'account') ?>'
+                } else {
+                    alert("Opss... Algo deu errado! Tente novamente.")
+                }
+            }
+        })
+    })
+</script>

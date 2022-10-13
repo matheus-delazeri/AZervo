@@ -3,5 +3,10 @@
 use App\AZervo;
 
 require_once('vendor/autoload.php');
+session_start();
 
-AZervo::runActionByUrl();
+if(defined('STDIN') && $argv[1] == "config") {
+    AZervo::getModel("core")->configConnection();
+} else {
+    AZervo::runActionByUrl();
+}

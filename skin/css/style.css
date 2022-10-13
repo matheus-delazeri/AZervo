@@ -87,8 +87,8 @@ img.logo {
 
 @media only screen and (max-width: 990px) {
     img.logo {
-        width: 80%;
-        margin: 0 10%;
+        width: 40%;
+        margin: 0 30%;
     }
     .result {
         font-size: 13px;

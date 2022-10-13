@@ -17,26 +17,39 @@ class AZervo
         return new $namespace;
     }
 
+    static public function redirect($controllerPath = 'index', $action = 'index')
+    {
+        header("Location:" . self::getUrl($controllerPath, $action));
+        exit();
+    }
+
     static public function loadView($path = "index", $extension = "phtml")
     {
-        return require_once("View/$path.$extension");
+        self::loadBlock("header");
+        require_once("View/$path.$extension");
+        self::loadBlock("footer");
     }
 
     static public function loadBlock($path, $extension = "phtml")
     {
-        return self::loadView("Block/$path", $extension);
+        require_once("View/Block/$path.$extension");
     }
 
-    static public function getUrl($controllerPath, $action = "index"): string
+    static public function getUrl($controllerPath, $action = "index")
     {
         $controllerPath = $controllerPath == "index" ? "" : $controllerPath . "/";
         $action = $action == "index" ? "" : $action . "/";
         return self::getBaseUrl() . $controllerPath . $action;
     }
 
-    static public function getSkinUrl($path): string
+    static public function getSkinUrl($path)
     {
         return self::getBaseUrl() . "skin/" . $path;
+    }
+
+    static public function getBaseDir()
+    {
+        return __DIR__;
     }
 
     static public function runActionByUrl()
@@ -59,7 +72,7 @@ class AZervo
         $controller->$actionName();
     }
 
-    static public function getProtocol(): string
+    static public function getProtocol()
     {
         $isSecure = false;
         if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
@@ -70,12 +83,12 @@ class AZervo
         return $isSecure ? 'https://' : 'http://';
     }
 
-    static public function getCurrentUrl(): string
+    static public function getCurrentUrl()
     {
         return self::getProtocol() . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     }
 
-    static public function getBaseUrl(): string
+    static public function getBaseUrl()
     {
         $requestUrl = self::getCurrentUrl();
         if (strpos($requestUrl, self::BASE_URL_LIMIT) !== false) {
@@ -88,3 +101,4 @@ class AZervo
     }
 
 }
+

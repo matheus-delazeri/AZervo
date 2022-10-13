@@ -14,7 +14,7 @@ class Crossref extends Api
         "author" => "Autor"
     );
 
-    public function getQueryFilters(): array
+    public function getQueryFilters()
     {
         $queryFilters = array();
         foreach (self::FILTERS as $filter => $label){
@@ -26,7 +26,7 @@ class Crossref extends Api
         return $queryFilters;
     }
 
-    public function getResultsFound($page): array
+    public function getResultsFound($page)
     {
         $results = array(
             "items" => array(),
@@ -63,7 +63,7 @@ class Crossref extends Api
         return $results;
     }
 
-    private function getAuthorsAsStr($item): string
+    private function getAuthorsAsStr($item)
     {
         $authorsStrArr = array();
         if (isset($item["author"])) {

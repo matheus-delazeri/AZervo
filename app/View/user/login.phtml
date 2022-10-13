@@ -1,0 +1,48 @@
+<?php
+use App\AZervo;
+
+AZervo::getModel("core");
+?>
+<div class="row" style="align-items: center; height: 70%">
+    <div class="col-md-4"></div>
+    <div class="col-md-4" style="display: flex; flex-direction: column;justify-content: center">
+        <div class="input-group mb-2">
+            <div class="input-group-prepend">
+                <span class="input-group-text">E-mail</span>
+            </div>
+            <input type="email" class="form-control" id="email" placeholder="Digite seu e-mail...">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Senha</span>
+            </div>
+            <input type="password" class="form-control" id="password" placeholder="Digite sua senha...">
+        </div>
+        <button type="button" class="btn btn-dark" id="btn-login">
+            Entrar
+            <i class="fa fa-sign-in"></i>
+        </button>
+        <br>
+        <p style="text-align: center">É novo por aqui? <a href="<?php echo AZervo::getUrl('user', 'register')?>">Registre-se!</a> </p>
+    </div>
+    <div class="col-md-4"></div>
+</div>
+<script>
+    jQuery("#btn-login").click(function () {
+        jQuery.ajax({
+            url: '<?php echo AZervo::getUrl('user', 'login')?>',
+            method: "POST",
+            data: {
+                email: jQuery("#email").val(),
+                password: jQuery("#password").val()
+            },
+            success: function (logged) {
+                if(parseInt(logged)) {
+                    window.location.href = '<?php echo AZervo::getUrl('user', 'account') ?>'
+                } else {
+                    alert("Dados inválidos... Tente novamente!")
+                }
+            }
+        })
+    })
+</script>
