@@ -17,6 +17,28 @@ class AZervo
         return new $namespace;
     }
 
+    public static function addError($message)
+    {
+        $_SESSION['messages'][] = "<div class='error-msg'><i class='fa fa-exclamation-circle'></i> $message</div>";
+    }
+
+    public static function addSuccess($message)
+    {
+        $_SESSION['messages'][] = "<div class='success-msg'><i class='fa fa-check'></i> $message</div>";
+    }
+
+    public static function displayMessages()
+    {
+        if(isset($_SESSION['messages'])) {
+            echo "<div class='msg-container'>";
+            foreach ($_SESSION['messages'] as $message) {
+                echo $message;
+            }
+            echo "</div>";
+        }
+        unset($_SESSION['messages']);
+    }
+
     static public function redirect($controllerPath = 'index', $action = 'index')
     {
         header("Location:" . self::getUrl($controllerPath, $action));

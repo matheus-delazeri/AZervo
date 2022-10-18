@@ -14,7 +14,9 @@ use App\AZervo;
         <script src="<?php echo AZervo::getSkinUrl("js/jquery.min.js")?>"></script>
         <script src="<?php echo AZervo::getSkinUrl("js/popper.min.js")?>"></script>
         <script src="<?php echo AZervo::getSkinUrl("js/bootstrap.min.js")?>"></script>
+        <script src="<?php echo AZervo::getSkinUrl("js/script.js")?>"></script>
     </head>
     <body>
     <?php AZervo::loadBlock('topHeader')?>
+    <?php AZervo::displayMessages()?>
 

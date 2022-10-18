@@ -40,7 +40,7 @@ AZervo::getModel("core");
                 if(parseInt(logged)) {
                     window.location.href = '<?php echo AZervo::getUrl('user', 'account') ?>'
                 } else {
-                    alert("Dados inválidos... Tente novamente!")
+                    window.location.reload()
                 }
             }
         })

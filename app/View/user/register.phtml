@@ -45,7 +45,7 @@ AZervo::getModel("core");
                 if(parseInt(created)) {
                     window.location.href = '<?php echo AZervo::getUrl('user', 'account') ?>'
                 } else {
-                    alert("Opss... Algo deu errado! Tente novamente.")
+                    window.location.reload()
                 }
             }
         })
