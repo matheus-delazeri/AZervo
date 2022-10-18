@@ -21,7 +21,7 @@ class Core
 
     public function connect()
     {
-        $dbConfig = parse_url(getenv("CLEARDB_DATABASE_URL"));
+        $dbConfig = parse_url(getenv("DATABASE_URL"));
         $dbName = substr($dbConfig['path'], 1);
         $this->_connection = new mysqli($dbConfig['host'], $dbConfig['user'], $dbConfig['pass'], $dbName);
         if ($this->_connection->connect_error) {
