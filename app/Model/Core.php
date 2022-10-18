@@ -17,7 +17,6 @@ class Core
         $this->CONFIG_PATH = AZervo::getBaseDir() . "/etc/config.json";
         $this->_config = json_decode(file_get_contents($this->CONFIG_PATH), true);
         $this->_dbConfig = $this->_config['db'];
-        $this->connect();
     }
 
     public function configConnection()
@@ -36,7 +35,7 @@ class Core
         }
     }
 
-    private function connect()
+    public function connect()
     {
         $dbConfig = $this->_dbConfig['connection'];
         $this->_connection = new mysqli($dbConfig['host'], $dbConfig['user'], $dbConfig['password']);
@@ -89,10 +88,12 @@ class Core
     public function updateRegister($table, $data)
     {
        if(isset($data['id'])) {
+           $id = $data['id'];
+           unset($data['id']);
            $valuesVar = implode(", ", array_map(function ($key) {
                return "$key = ?";
            }, array_keys($data)));
-           if($query = $this->_connection->prepare("UPDATE {$table} SET {$valuesVar}")) {
+           if($query = $this->_connection->prepare("UPDATE {$table} SET {$valuesVar} WHERE id = $id")) {
                $query->bind_param(str_repeat("s", count(array_keys($data))), ...array_values($data));
                $query->execute();
                return $data['id'];

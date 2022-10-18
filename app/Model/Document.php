@@ -6,6 +6,12 @@ use App\AZervo;
 
 class Document extends Core
 {
+    public function __construct()
+    {
+        parent::__construct();
+        parent::connect();
+    }
+
     public function add($doi, $links)
     {
         $newDocument = array(

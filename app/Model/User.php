@@ -6,6 +6,12 @@ use App\AZervo;
 
 class User extends Core
 {
+    public function __construct()
+    {
+        parent::__construct();
+        parent::connect();
+    }
+
     public function login($credentials = array())
     {
         if (empty($credentials)) {
