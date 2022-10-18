@@ -19,43 +19,19 @@ class Core
         $this->_dbConfig = $this->_config['db'];
     }
 
-    public function configConnection()
-    {
-        print_r("-- Configure DB connection: \n");
-        foreach ($this->_dbConfig["connection"] as $field => $value) {
-            $this->_dbConfig["connection"][$field] = readline("[$field]: \n");
-        }
-
-        if (file_put_contents($this->CONFIG_PATH, json_encode($this->_config))) {
-            $this->connect();
-            $this->createTables();
-            print_r("-- Configuration complete.\n");
-        } else {
-            print_r("-- Configuration not saved.\n");
-        }
-    }
-
     public function connect()
     {
-        $dbConfig = $this->_dbConfig['connection'];
-        $this->_connection = new mysqli($dbConfig['host'], $dbConfig['user'], $dbConfig['password']);
+        $dbConfig = parse_url(getenv("CLEARDB_DATABASE_URL"));
+        $dbName = substr($dbConfig['path'], 1);
+        $this->_connection = new mysqli($dbConfig['host'], $dbConfig['user'], $dbConfig['pass'], $dbName);
         if ($this->_connection->connect_error) {
             die("-- Connection failed: " . $this->_connection->connect_error . "\n");
-        } else {
-            $this->setDefaultDatabase();
         }
-
     }
 
-    private function setDefaultDatabase()
+    public function createTables()
     {
-        $query = "CREATE DATABASE IF NOT EXISTS {$this->_dbConfig['connection']['dbname']}";
-        mysqli_query($this->_connection, $query);
-        mysqli_select_db($this->_connection, $this->_dbConfig['connection']['dbname']);
-    }
-
-    private function createTables()
-    {
+        $this->connect();
         $sqlDir = AZervo::getBaseDir() . "/sql/";
         print_r("-- Creating tables...\n");
         foreach ($this->_dbConfig['tables'] as $table) {
