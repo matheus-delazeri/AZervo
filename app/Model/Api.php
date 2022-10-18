@@ -32,10 +32,6 @@ class Api
         $curl = $this->buildCurl($url);
 
         $response = curl_exec($curl);
-        $info = curl_getinfo($curl);
-        if(!in_array($info['http_code'], array("200", "302"))) {
-            var_dump($info);
-        }
         if($jsonReturn) $response = json_decode($response, true);
         curl_close($curl);
 
