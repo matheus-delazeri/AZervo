@@ -1,11 +1,9 @@
 html, body {
     height: 100%;
 }
-
 .row {
     margin: 0;
 }
-
 .top-header {
     padding: 10px;
     width: 100%;
@@ -15,13 +13,11 @@ html, body {
     box-sizing: border-box;
     border-bottom: 1px solid #cecece;
 }
-
 .input-group-text {
     color: #fff !important;
     background-color: #343a40 !important;
     border-color: #343a40 !important;
 }
-
 .searching {
     display: flex;
     justify-content: center;
@@ -30,43 +26,35 @@ html, body {
     color: #444444;
     text-align: center;
 }
-
 .loading-gif {
     width: 10%;
 }
-
 .top-menu {
     display: flex;
     justify-content: end;
     align-items: center;
 }
-
 .top-menu a {
     margin: 0 3%;
 }
-
 .title {
     border-bottom: 1px solid #cecece;
     width: max-content;
 }
-
 nav {
     align-self: center;
     margin: 20px 5px;
 }
-
 .results-page {
     justify-content: center;
     height: 80%;
     margin: 0 5%;
 }
-
 .pagination {
     justify-content: center;
     margin: 0;
     flex-wrap: wrap;
 }
-
 .page-link {
     color: #444444 !important;
 }
@@ -74,34 +62,27 @@ nav {
 li.page-item {
     margin-top: 5px;
 }
-
 .page-link:hover {
     font-weight: bold;
 }
-
 .results-table td {
     overflow-wrap: anywhere;
 }
-
 tr.result td {
     vertical-align: middle;
     line-height: 1;
 }
-
 .list-group-item {
     background: transparent;
 }
-
 .page-item.active .page-link, .page-item.disabled .page-link {
     pointer-events: none;
     background: #e9ecef !important;
     border-color: #e9ecef !important;
 }
-
 img.logo {
     width: 40%;
 }
-
 .actions {
     text-align: center;
 }
@@ -112,34 +93,31 @@ img.logo {
     scale: 1.3;
     cursor: pointer;
 }
-
 .msg-container {
     display: none;
-    align-items: center;
+    position: absolute;
+    right: 0;
+    z-index: 9999;
     flex-direction: column;
-    justify-content: center;
-    padding: 5px;
+    width: 20%;
+    padding: 10px 30px;
     font-size: 14px;
 }
-
 .error-msg, .success-msg {
     border: 1px solid;
-    border-radius: 5px;
+    border-radius: 2px;
     margin: 2px 0;
     padding: 10px 15px;
     width: 100%;
 }
-
 .error-msg {
     color: #D8000C;
     background-color: #FFBABA;
 }
-
 .success-msg {
     color: #4F8A10;
     background-color: #DFF2BF;
 }
-
 @media only screen and (max-width: 990px) {
     img.logo {
         width: 40%;
@@ -150,5 +128,8 @@ img.logo {
     }
     .result {
         font-size: 13px;
+    }
+    .msg-container {
+        width: 100% !important;
     }
 }
