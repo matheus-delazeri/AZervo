@@ -2,23 +2,63 @@
 
 use App\AZervo;
 
-$_userId = $_SESSION['user_id'];
+$_user = AZervo::getModel('user')->userLoggedIn();
+$_savedDocuments = AZervo::getModel('user')->getSavedDocuments();
 
 ?>
 <div class="row" style="height: 70%; padding: 2% 0">
-    <?php if ($_userId): ?>
+    <?php if ($_user): ?>
         <div class="col-md-2"></div>
         <div class="col-md-8" style="display: flex; flex-direction: column;">
-            <h3>Minha Conta</h3>
+            <h3 class="title">Minha Conta</h3>
             <br>
             <?php
-               if($_user = AZervo::getModel("user")->load($_userId)) {
-                   echo "
-                        <p><b>E-mail:</b> {$_user['email']}</p>
-                        <p><b>Nome:</b> {$_user['name']}</p>
-                    ";
-               }
+            echo "
+                    <p><b>E-mail:</b> {$_user['email']}</p>
+                    <p><b>Nome:</b> {$_user['name']}</p>
+                ";
             ?>
+            <br>
+            <h3>Meus Documentos</h3>
+            <br>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th style="min-width: 75%; width: 75%" scope="col">Documento</th>
+                    <th style="min-width: 15%; width: 15%" scope="col">Links</th>
+                    <th style="min-width: 10%; width: 10%" scope="col">Ações</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+                foreach ($_savedDocuments as $doi => $id) {
+                    $document = AZervo::getModel("document")->load($id);
+                    $links = "";
+                    $count = 0;
+                    foreach (explode(";", $document['links']) as $link) {
+                        if($link == "") continue;
+                        $count++;
+                        $links .= "<li class='list-group-item'><a href='$link'>Download [$count]</a></li>";
+                    }
+                    $item = AZervo::getModel("api_crossref")->getItemByDoi($doi);
+                    echo "<tr class='result' doi='{$item['doi']}'>
+                <td>
+                    <p><b>DOI:</b> {$item['doi']}</p>
+                    <p><b>Título:</b> {$item['title']}</p>
+                    <p><b>Autores:</b> {$item['author']}</p>
+                    <p><b>Assunto:</b> {$item['subject']}</p>
+                    <p><b>Tipo:</b> {$item['type']}</p>
+                    <p><b>ISBN:</b> {$item['isbn']}</p>
+                </td>
+                <td class='results-links'>
+                    <ul class='list-group list-group-flush links-list'>$links</ul>
+                </td>
+                <td class='actions'><i class='fa fa-star unsave-document' document='{$id}'></i></td>
+            </tr>";
+                }
+                ?>
+                </tbody>
+            </table>
         </div>
         <div class="col-md-2"></div>
 
@@ -26,3 +66,21 @@ $_userId = $_SESSION['user_id'];
         <p>Faça login para acessar a sua conta.</p>
     <?php endif; ?>
 </div>
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function () {
+        jQuery(document).on('click', '.unsave-document', function () {
+            let $this = this
+            let documentId = jQuery(this).attr('document')
+            jQuery.ajax({
+                url: '<?php echo AZervo::getUrl('user', 'unsaveDocument') ?>',
+                method: 'POST',
+                data: {
+                    id: documentId,
+                },
+                success: function (data) {
+                    jQuery($this).parent().parent().remove()
+                }
+            })
+        })
+    })
+</script>

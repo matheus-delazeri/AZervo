@@ -7,7 +7,8 @@ use App\AZervo;
 class Api
 {
     const DATASETS_MODELS = array(
-        "scihub"
+        "scihub",
+        "azervodb"
     );
 
     const ERROR_ICON_CLASS = "fa fa-close";

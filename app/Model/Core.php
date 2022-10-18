@@ -86,6 +86,22 @@ class Core
         return false;
     }
 
+    public function updateRegister($table, $data)
+    {
+       if(isset($data['id'])) {
+           $valuesVar = implode(", ", array_map(function ($key) {
+               return "$key = ?";
+           }, array_keys($data)));
+           if($query = $this->_connection->prepare("UPDATE {$table} SET {$valuesVar}")) {
+               $query->bind_param(str_repeat("s", count(array_keys($data))), ...array_values($data));
+               $query->execute();
+               return $data['id'];
+           }
+       }
+
+       return false;
+    }
+
     public function getRegisterById($table, $id)
     {
         $query = $this->_connection->query("SELECT * FROM {$table} WHERE id = '{$id}'");

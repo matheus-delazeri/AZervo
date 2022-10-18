@@ -35,4 +35,17 @@ class UserController
         AZervo::getModel("user")->logout();
         AZervo::redirect();
     }
+
+    public function saveDocumentAction()
+    {
+        $_doi = $_POST['doi'];
+        $_links = explode(";", $_POST['links']);
+        AZervo::getModel("user")->saveDocument($_doi, $_links);
+    }
+
+    public function unsaveDocumentAction()
+    {
+        $_id = $_POST['id'];
+        AZervo::getModel("user")->unsaveDocument($_id);
+    }
 }

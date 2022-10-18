@@ -55,12 +55,24 @@ $_maxPageLinks = 15;
             <tr>
                 <th style="min-width: 75%; width: 75%" scope="col">Documento</th>
                 <th style="min-width: 25%; width: 25%" scope="col">Links</th>
+                <?php if(AZervo::getModel('user')->userLoggedIn()):?>
+                <th style="min-width: 25%; width: 25%" scope="col">Ações</th>
+                <?php endif;?>
             </tr>
             </thead>
             <tbody>
             <?php
             $loadingGif = AZervo::getSkinUrl('images/loading.gif');
             foreach ($_results["items"] as $item) {
+                $actions = "";
+                if(AZervo::getModel('user')->userLoggedIn()) {
+                    $savedDocuments = AZervo::getModel('user')->getSavedDocuments();
+                    if(!isset($savedDocuments[$item['doi']])) {
+                        $actions = "<td class='actions'><i class='fa fa-star-o save-document'></i></td>";
+                    } else {
+                        $actions = "<td class='actions'><i class='fa fa-star unsave-document' document='{$savedDocuments[$item['doi']]}'></i></td>";
+                    }
+                }
                 echo "<tr class='result' doi='{$item['doi']}'>
                 <td>
                     <p><b>DOI:</b> {$item['doi']}</p>
@@ -71,6 +83,7 @@ $_maxPageLinks = 15;
                     <p><b>ISBN:</b> {$item['isbn']}</p>
                 </td>
                 <td class='results-links'><img class='loading-gif' src='$loadingGif' alt=''></td>
+                $actions 
             </tr>";
             }
             ?>
@@ -132,10 +145,6 @@ $_maxPageLinks = 15;
                     doi: doi
                 },
                 dataType: "json",
-                error: function (error) {
-                    let resultsEl = jQuery($this).find('.results-links')
-                    jQuery(resultsEl).html("Tempo excedido")
-                },
                 success: function (results) {
                     let resultsEl = jQuery($this).find('.results-links')
                     jQuery(resultsEl).html("<ul class='list-group list-group-flush links-list'></ul>")
@@ -143,8 +152,47 @@ $_maxPageLinks = 15;
                         let linksListEl = jQuery($this).find('.links-list')
                         jQuery(linksListEl).append(`<li class="list-group-item">${url}</li>`)
                     })
+                }
+            })
+        })
+
+        jQuery(document).on('click', '.save-document', function () {
+            let $this = this
+            let documentRow = jQuery(this).parent().parent()
+            let documentDOI = documentRow.attr("doi")
+            let documentLinks = []
+            documentRow.find(".results-links > ul").each(function () {
+                if(jQuery(this).find("a")) {
+                    documentLinks.push(jQuery(this).find("a").attr("href"))
+                }
+            })
+            jQuery.ajax({
+                url: '<?php echo AZervo::getUrl('user', 'saveDocument') ?>',
+                method: 'POST',
+                data: {
+                    doi: documentDOI,
+                    links: documentLinks.join(";")
                 },
-                timeout: 60000
+                success: function (data) {
+                    jQuery($this).removeClass('fa-star-o save-document')
+                    jQuery($this).addClass('fa-star unsave-document')
+                }
+            })
+        })
+
+        jQuery(document).on('click', '.unsave-document', function () {
+            let $this = this
+            let documentId = jQuery(this).attr('document')
+            jQuery.ajax({
+                url: '<?php echo AZervo::getUrl('user', 'unsaveDocument') ?>',
+                method: 'POST',
+                data: {
+                    id: documentId,
+                },
+                success: function (data) {
+                    jQuery($this).removeClass('fa-star unsave-document')
+                    jQuery($this).addClass('fa-star-o save-document')
+                }
             })
         })
     })

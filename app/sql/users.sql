@@ -3,5 +3,6 @@ CREATE TABLE IF NOT EXISTS users (
     `email` varchar(255) NOT NULL,
     `name` varchar(255) NOT NULL,
     `password_hash` varchar (255) NOT NULL,
+    `documents` varchar (255),
     PRIMARY KEY (`id`)
 )

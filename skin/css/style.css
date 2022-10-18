@@ -45,6 +45,11 @@ html, body {
     margin: 0 3%;
 }
 
+.title {
+    border-bottom: 1px solid #cecece;
+    width: max-content;
+}
+
 nav {
     align-self: center;
     margin: 20px 5px;
@@ -52,7 +57,7 @@ nav {
 
 .results-page {
     justify-content: center;
-    height: max-content;
+    height: 80%;
     margin: 0 5%;
 }
 
@@ -68,10 +73,6 @@ nav {
 
 li.page-item {
     margin-top: 5px;
-}
-
-li.list-group-item {
-    padding: 0;
 }
 
 .page-link:hover {
@@ -99,6 +100,17 @@ tr.result td {
 
 img.logo {
     width: 40%;
+}
+
+.actions {
+    text-align: center;
+}
+.save-document, .unsave-document {
+    font-size: 20px;
+}
+.save-document:hover, .unsave-document:hover {
+    scale: 1.3;
+    cursor: pointer;
 }
 
 .msg-container {
