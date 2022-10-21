@@ -47,12 +47,12 @@ nav {
 }
 .results-page {
     justify-content: center;
-    height: 80%;
+    height: max-content;
     margin: 0 5%;
 }
 .pagination {
     justify-content: center;
-    margin: 0;
+    margin-bottom: 2%;
     flex-wrap: wrap;
 }
 .page-link {

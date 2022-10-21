@@ -1,54 +1,18 @@
 <?php
 
 use App\AZervo;
-use App\Model\Api\Crossref;
+use App\Model\View;
 
 $_currentPage = $_GET["page"] ?? 1;
 $_results = AZervo::getModel("api_crossref")->getResultsFound($_currentPage);
-$_itemsPerPage = Crossref::ITEMS_PER_PAGE;
-$_totalPages = ceil($_results["total_items"] / $_itemsPerPage);
-$_maxPageLinks = 15;
+$_totalPages = ceil($_results["total_items"] / View::PAGINATION['items_per_page']);
+
 ?>
 <div class="row results-page">
     <?php if ($_results['total_items'] > 0): ?>
         <nav aria-label="Navegar">
-            <p style="margin: 0;text-align: center">Total de itens encontrados:
-                <b><?php echo $_results['total_items'] ?></b></p>
-            <p style="text-align: center">Total de páginas: <b><?php echo $_totalPages ?></b></p>
-            <ul class="pagination">
-                <li class="page-item previous-page">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                </li>
-                <?php
-                $_pageStart = 1;
-                if ($_currentPage >= $_maxPageLinks) {
-                    $_pageStart = $_currentPage - $_maxPageLinks + 2;
-                }
-                if ($_currentPage == $_totalPages && $_maxPageLinks <= $_totalPages) {
-                    $_pageStart = $_currentPage - $_maxPageLinks + 1;
-                }
-                if ($_maxPageLinks > $_totalPages) {
-                    $_maxPageLinks = $_totalPages;
-                }
-                for ($page = 0; $page < $_maxPageLinks; $page++) {
-                    $pageNum = $_pageStart + $page;
-                    $activeClass = $pageNum == $_currentPage ? "active" : "";
-                    echo "
-                    <li class='page-item $activeClass' page='$pageNum'>
-                        <a class='page-link' href='#'>$pageNum</a>
-                    </li>
-                ";
-                } ?>
-                <li class="page-item next-page">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </li>
-            </ul>
+            <?php echo AZervo::getModel('view')->getPaginationHeaderHTML($_results["total_items"]);?>
+            <?php echo AZervo::getModel('view')->getPaginationHTML($_results["total_items"], $_currentPage);?>
         </nav>
         <table class="table table-striped">
             <thead>
@@ -89,6 +53,7 @@ $_maxPageLinks = 15;
             ?>
             </tbody>
         </table>
+        <?php echo AZervo::getModel('view')->getPaginationHTML($_results["total_items"], $_currentPage);?>
     <?php else: # If no result found
         AZervo::loadBlocK('noResult');
     endif; ?>

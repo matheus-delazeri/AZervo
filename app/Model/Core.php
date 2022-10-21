@@ -7,8 +7,8 @@ use mysqli;
 
 class Core
 {
-    protected $_connection;
     protected $CONFIG_PATH;
+    protected $_connection;
     protected $_config;
     protected $_dbConfig;
 

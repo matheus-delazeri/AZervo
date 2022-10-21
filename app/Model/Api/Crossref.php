@@ -3,11 +3,11 @@
 namespace App\Model\Api;
 
 use App\Model\Api;
+use App\Model\View;
 
 class Crossref extends Api
 {
     const ENDPOINT = "http://api.crossref.org/works";
-    const ITEMS_PER_PAGE = 5;
     const MAX_ITEMS = 9990;
     const FILTERS = array(
         "title" => "Título",
@@ -36,8 +36,8 @@ class Crossref extends Api
             "sort" => "score",
             "order" => "desc",
             "select" => "DOI,title,author,type,subject,ISBN",
-            "rows" => self::ITEMS_PER_PAGE,
-            "offset" => ($page - 1) * self::ITEMS_PER_PAGE
+            "rows" => View::PAGINATION['items_per_page'],
+            "offset" => ($page - 1) * View::PAGINATION['items_per_page']
         );
 
         $queryFilters = $this->getQueryFilters();
