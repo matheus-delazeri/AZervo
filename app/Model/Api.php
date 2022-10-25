@@ -49,8 +49,6 @@ class Api
         curl_setopt_array($curl, array(
             CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_SSL_VERIFYHOST => false,
-            CURLOPT_SSL_VERIFYPEER => false,
             CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_MAXREDIRS => 10,
             CURLOPT_FOLLOWLOCATION => true
