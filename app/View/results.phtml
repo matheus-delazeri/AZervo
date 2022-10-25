@@ -8,7 +8,7 @@ $_results = AZervo::getModel("api_crossref")->getResultsFound($_currentPage);
 $_totalPages = ceil($_results["total_items"] / View::PAGINATION['items_per_page']);
 
 ?>
-<div class="row results-page">
+<div class="row page results">
     <?php if ($_results['total_items'] > 0): ?>
         <nav aria-label="Navegar">
             <?php echo AZervo::getModel('view')->getPaginationHeaderHTML($_results["total_items"]);?>
@@ -53,7 +53,9 @@ $_totalPages = ceil($_results["total_items"] / View::PAGINATION['items_per_page'
             ?>
             </tbody>
         </table>
+        <nav aria-label="Navegar">
         <?php echo AZervo::getModel('view')->getPaginationHTML($_results["total_items"], $_currentPage);?>
+        </nav>
     <?php else: # If no result found
         AZervo::loadBlocK('noResult');
     endif; ?>

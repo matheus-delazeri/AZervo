@@ -4,6 +4,9 @@ html, body {
 .row {
     margin: 0;
 }
+.input-group, .btn {
+    width: 70%;
+}
 .top-header {
     padding: 10px;
     width: 100%;
@@ -45,10 +48,18 @@ nav {
     align-self: center;
     margin: 20px 5px;
 }
-.results-page {
+.page {
     justify-content: center;
+    height: 70%;
+    margin: 2% 5%;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center
+}
+.results {
     height: max-content;
-    margin: 0 5%;
 }
 .pagination {
     justify-content: center;

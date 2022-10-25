@@ -11,6 +11,7 @@ $_isLoggedIn = isset($_SESSION["user_id"]);
     <div class="col-md-6"></div>
     <div class="col-md-3 top-menu" style="display: flex; align-items: center; justify-content: end">
         <a href="<?php echo AZervo::getUrl('index')?>">Início</a>
+        <a href="<?php echo AZervo::getUrl('about')?>">Sobre</a>
         <?php if($_isLoggedIn) {
             echo "<a href='".AZervo::getUrl('user', 'account')."'>Minha Conta</a>";
             echo "<a href='".AZervo::getUrl('user', 'logout')."'>Sair</a>";
