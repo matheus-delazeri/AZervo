@@ -53,7 +53,7 @@ class Api
             CURLOPT_SSL_VERIFYPEER => false,
             CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_MAXREDIRS => 10,
-            CURLOPT_FOLLOWLOCATION => false
+            CURLOPT_FOLLOWLOCATION => true
         ));
 
         return $curl;
