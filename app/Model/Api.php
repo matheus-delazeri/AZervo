@@ -36,7 +36,6 @@ class Api
         $curl = $this->buildCurl($url);
 
         $response = curl_exec($curl);
-        var_dump(curl_getinfo($curl));
         if($jsonReturn) $response = json_decode($response, true);
         curl_close($curl);
 
@@ -54,7 +53,7 @@ class Api
             CURLOPT_SSL_VERIFYPEER => false,
             CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_MAXREDIRS => 10,
-            CURLOPT_FOLLOWLOCATION => true
+            CURLOPT_FOLLOWLOCATION => false
         ));
 
         return $curl;
