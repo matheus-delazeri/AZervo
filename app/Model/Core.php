@@ -72,7 +72,7 @@ class Core
            if($query = $this->_connection->prepare("UPDATE {$table} SET {$valuesVar} WHERE id = $id")) {
                $query->bind_param(str_repeat("s", count(array_keys($data))), ...array_values($data));
                $query->execute();
-               return $data['id'];
+               return $id;
            }
        }
 

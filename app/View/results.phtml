@@ -4,58 +4,63 @@ use App\AZervo;
 use App\Model\View;
 
 $_currentPage = $_GET["page"] ?? 1;
-$_results = AZervo::getModel("api_crossref")->getResultsFound($_currentPage);
+if ($_GET["search_for"] == "books") {
+    $_api = AZervo::getModel("api_google");
+} else {
+    $_api = AZervo::getModel("api_crossref");
+}
+
+$_results = $_api->getResultsFound($_currentPage);
 $_totalPages = ceil($_results["total_items"] / View::PAGINATION['items_per_page']);
 
 ?>
 <div class="row page results">
     <?php if ($_results['total_items'] > 0): ?>
-        <nav aria-label="Navegar">
-            <?php echo AZervo::getModel('view')->getPaginationHeaderHTML($_results["total_items"]);?>
-            <?php echo AZervo::getModel('view')->getPaginationHTML($_results["total_items"], $_currentPage);?>
-        </nav>
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th style="min-width: 75%; width: 75%" scope="col">Documento</th>
-                <th style="min-width: 25%; width: 25%" scope="col">Links</th>
-                <?php if(AZervo::getModel('user')->userLoggedIn()):?>
+    <nav aria-label="Navegar">
+        <?php echo AZervo::getModel('view')->getPaginationHeaderHTML($_results["total_items"]); ?>
+        <?php echo AZervo::getModel('view')->getPaginationHTML($_results["total_items"], $_currentPage); ?>
+    </nav>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th style="min-width: 75%; width: 75%" scope="col">Documento</th>
+            <th style="min-width: 25%; width: 25%" scope="col">Links</th>
+            <?php if (AZervo::getModel('user')->userLoggedIn()): ?>
                 <th style="min-width: 25%; width: 25%" scope="col">Ações</th>
-                <?php endif;?>
-            </tr>
-            </thead>
-            <tbody>
-            <?php
-            $loadingGif = AZervo::getSkinUrl('images/loading.gif');
-            foreach ($_results["items"] as $item) {
-                $actions = "";
-                if(AZervo::getModel('user')->userLoggedIn()) {
-                    $savedDocuments = AZervo::getModel('user')->getSavedDocuments();
-                    if(!isset($savedDocuments[$item['doi']])) {
-                        $actions = "<td class='actions'><i class='fa fa-star-o save-document'></i></td>";
-                    } else {
-                        $actions = "<td class='actions'><i class='fa fa-star unsave-document' document='{$savedDocuments[$item['doi']]}'></i></td>";
-                    }
-                }
-                echo "<tr class='result' doi='{$item['doi']}'>
-                <td>
-                    <p><b>DOI:</b> {$item['doi']}</p>
-                    <p><b>Título:</b> {$item['title']}</p>
-                    <p><b>Autores:</b> {$item['author']}</p>
-                    <p><b>Assunto:</b> {$item['subject']}</p>
-                    <p><b>Tipo:</b> {$item['type']}</p>
-                    <p><b>ISBN:</b> {$item['isbn']}</p>
-                </td>
-                <td class='results-links'><img class='loading-gif' src='$loadingGif' alt=''></td>
-                $actions 
-            </tr>";
+            <?php endif; ?>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        $loadingGif = AZervo::getSkinUrl('images/loading.gif');
+        foreach ($_results["items"] as $item):
+        $actions = "";
+        if (AZervo::getModel('user')->userLoggedIn()) {
+            $savedDocuments = AZervo::getModel('user')->getSavedDocuments();
+            if (!isset($savedDocuments[$item['doc_id']])) {
+                $actions = "<td class='actions'><i class='fa fa-star-o save-document'></i></td>";
+            } else {
+                $actions = "<td class='actions'><i class='fa fa-star unsave-document' document='{$savedDocuments[$item['doc_id']]}'></i></td>";
             }
-            ?>
-            </tbody>
-        </table>
-        <nav aria-label="Navegar">
-        <?php echo AZervo::getModel('view')->getPaginationHTML($_results["total_items"], $_currentPage);?>
-        </nav>
+        }
+        ?>
+        <tr class='result' doctype="<?php echo $_api::RESULTS_TYPE?>" document='<?php echo $item['doc_id'] ?>'>
+            <td class="result-info">
+                <?php
+                foreach ($_api::ATTRIBUTES as $code => $label) {
+                    echo "<p class='result-attribute' attr_id='$code' attr_value='{$item[$code]}'><b>$label:</b> <span>{$item[$code]}</span></p>";
+                }
+                ?>
+            </td>
+            <td class='results-links'><img class='loading-gif' src='<?php echo $loadingGif?>' alt=''></td>
+            <?php echo $actions ?>
+        </tr>
+        <?php endforeach;?>
+        </tbody>
+    </table>
+    <nav aria-label="Navegar">
+        <?php echo AZervo::getModel('view')->getPaginationHTML($_results["total_items"], $_currentPage); ?>
+    </nav>
     <?php else: # If no result found
         AZervo::loadBlocK('noResult');
     endif; ?>
@@ -103,13 +108,15 @@ $_totalPages = ceil($_results["total_items"] / View::PAGINATION['items_per_page'
         })
 
         jQuery(".result").each(function () {
-            let doi = jQuery(this).attr("doi")
+            let documentId = jQuery(this).attr("document")
+            let documentType = jQuery(this).attr("doctype")
             let $this = this
             jQuery.ajax({
                 url: '<?php echo AZervo::getUrl("search", "inDatasets")?>',
                 method: "POST",
                 data: {
-                    doi: doi
+                    id: documentId,
+                    type: documentType
                 },
                 dataType: "json",
                 success: function (results) {
@@ -125,22 +132,26 @@ $_totalPages = ceil($_results["total_items"] / View::PAGINATION['items_per_page'
 
         jQuery(document).on('click', '.save-document', function () {
             let $this = this
+            let document = {}
             let documentRow = jQuery(this).parent().parent()
-            let documentDOI = documentRow.attr("doi")
+            documentRow.find(".result-info > .result-attribute").each(function () {
+                document[jQuery(this).attr('attr_id')] = jQuery(this).attr('attr_value')
+            })
             let documentLinks = []
             documentRow.find(".results-links > ul").each(function () {
-                if(jQuery(this).find("a")) {
+                if (jQuery(this).find("a")) {
                     documentLinks.push(jQuery(this).find("a").attr("href"))
                 }
             })
+            documentLinks = documentLinks.join(";")
+            document['links'] = documentLinks
             jQuery.ajax({
                 url: '<?php echo AZervo::getUrl('user', 'saveDocument') ?>',
                 method: 'POST',
                 data: {
-                    doi: documentDOI,
-                    links: documentLinks.join(";")
+                    document: JSON.stringify(document),
                 },
-                success: function (data) {
+                success: function () {
                     jQuery($this).removeClass('fa-star-o save-document')
                     jQuery($this).addClass('fa-star unsave-document')
                 }
@@ -156,7 +167,7 @@ $_totalPages = ceil($_results["total_items"] / View::PAGINATION['items_per_page'
                 data: {
                     id: documentId,
                 },
-                success: function (data) {
+                success: function () {
                     jQuery($this).removeClass('fa-star unsave-document')
                     jQuery($this).addClass('fa-star-o save-document')
                 }

@@ -9,6 +9,12 @@ class Crossref extends Api
 {
     const ENDPOINT = "http://api.crossref.org/works";
     const MAX_ITEMS = 9990;
+    const RESULTS_TYPE = "paper";
+    const ATTRIBUTES = array(
+        'doc_id' => "DOI",
+        'title' => "Título",
+        'author' => "Autores"
+    );
     const FILTERS = array(
         "title" => "Título",
         "author" => "Autor"
@@ -56,20 +62,10 @@ class Crossref extends Api
         return $results;
     }
 
-    public function getItemByDoi($doi)
-    {
-        $response = $this->call(self::ENDPOINT."/$doi", array());
-        if($item = $response['message']) {
-            return $this->parseItemInfo($item);
-        }
-
-        return false;
-    }
-
     private function parseItemInfo($item)
     {
         return array(
-            "doi" => $item["DOI"] ?? "-",
+            "doc_id" => $item["DOI"] ?? "-",
             "title" => isset($item["title"]) ? $item["title"][0] : "-",
             "type" => $item["type"] ?? "-",
             "subject" => isset($item["subject"]) ? implode(", ", $item["subject"]) : "-",

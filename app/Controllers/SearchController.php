@@ -13,7 +13,7 @@ class SearchController
 
     public function inDatasetsAction()
     {
-        echo AZervo::getModel("api")->getResultsInDatasets($_POST["doi"]);
+        echo AZervo::getModel("api")->getResultsInDatasets($_POST["id"], $_POST["type"]);
     }
 
 }

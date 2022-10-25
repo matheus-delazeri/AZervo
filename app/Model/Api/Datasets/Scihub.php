@@ -5,23 +5,25 @@ namespace App\Model\Api\Datasets;
 use App\AZervo;
 use App\Model\Api;
 use DOMDocument;
+use DOMXPath;
 
 class Scihub extends Api
 {
     const URL_PREFIX = "https://sci-hub.se/";
+    const RESULTS_TYPE = array(
+        "paper"
+    );
 
-    public function getDownloadURL($doi): ?string
+    public function getDocumentURL($doi): ?string
     {
         $url = "";
         $response = $this->call(self::URL_PREFIX.$doi, array(), false);
         $dom = new DOMDocument();
         @$dom->loadHTML($response);
-        foreach ($dom->getElementsByTagName("button") as $button) {
-            foreach ($button->attributes as $attribute) {
-                if($url = $attribute->textContent) {
-                    $url = $this->parseLocationHref($url);
-                }
-            }
+        $xpath = new DOMXPath($dom);
+        if($downloadBtn = $xpath->query("//*[@id='buttons']/button")->item(0)) {
+            $onClick = $xpath->query("./@onclick", $downloadBtn)->item(0);
+            $url = $this->parseLocationHref($onClick->nodeValue);
         }
 
         return $url != ""
@@ -29,16 +31,13 @@ class Scihub extends Api
             : "Sci-Hub <i class='".Api::ERROR_ICON_CLASS."'></i>";
     }
 
-    private function parseLocationHref($htmlElement): string
+    private function parseLocationHref($locationHref)
     {
-        $url = "";
-        if(strpos($htmlElement, "location.href='/") !== false) {
-            $suffix = str_replace(array("location.href='/", "'"), "", $htmlElement);
-            if($suffix[0] == "/") { # Means that is a full URL, no need to append prefix
-                $url = AZervo::getProtocol() . substr($suffix, 1);
-            } else {
-                $url = self::URL_PREFIX . $suffix;
-            }
+        $suffix = str_replace(array("location.href='/", "'"), "", $locationHref);
+        if($suffix[0] == "/") { # Means that is a full URL, no need to append prefix
+            $url = AZervo::getProtocol() . substr($suffix, 1);
+        } else {
+            $url = self::URL_PREFIX . $suffix;
         }
 
         return "<a href='$url'>Sci-Hub <i class='".Api::DOWNLOAD_ICON_CLASS."'></i></a>";

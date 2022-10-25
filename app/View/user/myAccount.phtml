@@ -6,10 +6,10 @@ $_user = AZervo::getModel('user')->userLoggedIn();
 $_savedDocuments = AZervo::getModel('user')->getSavedDocuments();
 
 ?>
-<div class="row" style="height: 70%; padding: 2% 0">
+<div class="row page">
     <?php if ($_user): ?>
         <div class="col-md-3"></div>
-        <div class="col-md-6 container">
+        <div class="col-md-6" style="padding: 2% 0">
             <h3 class="title">Minha Conta</h3>
             <br>
             <?php
@@ -31,32 +31,30 @@ $_savedDocuments = AZervo::getModel('user')->getSavedDocuments();
                 </thead>
                 <tbody>
                 <?php
-                foreach ($_savedDocuments as $doi => $id) {
+                foreach ($_savedDocuments as $itemId => $id):
                     $document = AZervo::getModel("document")->load($id);
                     $links = "";
                     $count = 0;
                     foreach (explode(";", $document['links']) as $link) {
                         if($link == "") continue;
                         $count++;
-                        $links .= "<li class='list-group-item'><a href='$link'>Download [$count]</a></li>";
+                        $links .= "<li class='list-group-item'><a target='_blank' href='$link'>Link [$count]</a></li>";
                     }
-                    $item = AZervo::getModel("api_crossref")->getItemByDoi($doi);
-                    echo "<tr class='result' doi='{$item['doi']}'>
-                <td>
-                    <p><b>DOI:</b> {$item['doi']}</p>
-                    <p><b>Título:</b> {$item['title']}</p>
-                    <p><b>Autores:</b> {$item['author']}</p>
-                    <p><b>Assunto:</b> {$item['subject']}</p>
-                    <p><b>Tipo:</b> {$item['type']}</p>
-                    <p><b>ISBN:</b> {$item['isbn']}</p>
-                </td>
-                <td class='results-links'>
-                    <ul class='list-group list-group-flush links-list'>$links</ul>
-                </td>
-                <td class='actions'><i class='fa fa-star unsave-document' document='{$id}'></i></td>
-            </tr>";
-                }
-                ?>
+                    ?>
+                    <tr class='result' document='<?php echo $itemId ?>'>
+                        <td>
+                            <?php
+                            foreach (AZervo::getModel('document')::ATTRIBUTES as $code => $label) {
+                                echo "<p><b>$label:</b> {$document[$code]}</p>";
+                            }
+                            ?>
+                        </td>
+                        <td class='results-links'>
+                            <ul class='list-group list-group-flush links-list'><?php echo $links?></ul>
+                        </td>
+                        <td class='actions'><i class='fa fa-star unsave-document' document='<?php echo $id?>'></i></td>
+                    </tr>
+                <?php endforeach;?>
                 </tbody>
             </table>
         </div>

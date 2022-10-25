@@ -8,13 +8,36 @@ html, body {
     width: 70%;
 }
 .top-header {
-    padding: 10px;
+    padding: 0 10px;
     width: 100%;
     background-color: #ffffff;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     border-bottom: 1px solid #cecece;
+}
+.page {
+    height: 83%;
+    justify-content: center;
+}
+.results {
+    height: max-content;
+    margin: 0 5%;
+}
+.footer {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 7%;
+    background-color: #ffffff;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border-top: 1px solid #cecece;
+
 }
 .input-group-text {
     color: #fff !important;
@@ -48,18 +71,11 @@ nav {
     align-self: center;
     margin: 20px 5px;
 }
-.page {
-    justify-content: center;
-    height: 70%;
-    margin: 2% 5%;
-}
+
 .container {
     display: flex;
     flex-direction: column;
     justify-content: center
-}
-.results {
-    height: max-content;
 }
 .pagination {
     justify-content: center;
@@ -85,6 +101,9 @@ tr.result td {
 }
 .list-group-item {
     background: transparent;
+}
+.links-list {
+    text-align: center;
 }
 .page-item.active .page-link, .page-item.disabled .page-link {
     pointer-events: none;
@@ -114,6 +133,7 @@ img.logo {
     padding: 10px 30px;
     font-size: 14px;
 }
+
 .error-msg, .success-msg {
     border: 1px solid;
     border-radius: 2px;
@@ -136,6 +156,9 @@ img.logo {
     }
     .top-menu {
         justify-content: center !important;
+    }
+    .top-menu a {
+        font-size: 14px;
     }
     .result {
         font-size: 13px;

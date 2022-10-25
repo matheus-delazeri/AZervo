@@ -90,12 +90,12 @@ class User extends Core
         unset($_SESSION['user_id']);
     }
 
-    public function saveDocument($doi, $links)
+    public function saveDocument($newDocument)
     {
-        if ($document = $this->getRegisterByUniqueField('documents', 'doi', $doi)) {
+        if ($document = $this->getRegisterByUniqueField('documents', 'doc_id', $newDocument['doc_id'])) {
             $documentId = $document['id'];
         } else {
-            $documentId = AZervo::getModel("document")->add($doi, $links);
+            $documentId = AZervo::getModel("document")->add($newDocument);
         }
         if ($user = $this->getRegisterById('users', $_SESSION['user_id'])) {
             $savedDocuments = array_filter(explode(';', $user['documents']));
@@ -128,8 +128,8 @@ class User extends Core
         if($user = $this->userLoggedIn()) {
             $documentsIds = array_filter(explode(";", $user['documents']));
             foreach ($documentsIds as $id) {
-                $documentDOI = AZervo::getModel('document')->load($id)['doi'];
-                $savedDocuments[$documentDOI] = $id;
+                $documentId = AZervo::getModel('document')->load($id)['doc_id'];
+                $savedDocuments[$documentId] = $id;
             }
         }
 

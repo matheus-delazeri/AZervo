@@ -38,9 +38,8 @@ class UserController
 
     public function saveDocumentAction()
     {
-        $_doi = $_POST['doi'];
-        $_links = explode(";", $_POST['links']);
-        AZervo::getModel("user")->saveDocument($_doi, $_links);
+        $_document = json_decode($_POST['document'], true);
+        AZervo::getModel("user")->saveDocument($_document);
     }
 
     public function unsaveDocumentAction()

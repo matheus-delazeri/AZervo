@@ -6,7 +6,7 @@ class View
 {
     const PAGINATION = array(
         'max_pages_links' => 15,
-        'items_per_page' => 5
+        'items_per_page' => 10
     );
 
     public function getPaginationHeaderHTML($itemsCount)
@@ -22,7 +22,7 @@ class View
         $totalPages = ceil($itemsCount / self::PAGINATION['items_per_page']);
         $pageStart = 1;
         if ($currentPage >= self::PAGINATION['max_pages_links']) {
-            $pageStart = $currentPage - self::PAGINATION['max_page_links'] + 2;
+            $pageStart = $currentPage - self::PAGINATION['max_pages_links'] + 2;
         }
         if ($currentPage == $totalPages && self::PAGINATION['max_page_links'] <= $totalPages) {
             $pageStart = $currentPage - self::PAGINATION['max_page_links'] + 1;

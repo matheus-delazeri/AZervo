@@ -8,19 +8,23 @@ class Api
 {
     const DATASETS_MODELS = array(
         "scihub",
-        "azervodb"
+        "azervodb",
+        "zlibrary"
     );
 
     const ERROR_ICON_CLASS = "fa fa-close";
     const DOWNLOAD_ICON_CLASS = "fa fa-download";
+    const EXTERNAL_ICON_CLASS = "fa fa-external-link";
     const DATASETS_PATH = "api_datasets_";
 
-    public function getResultsInDatasets($doi)
+    public function getResultsInDatasets($id, $type)
     {
         $results = array();
         foreach (self::DATASETS_MODELS as $modelName) {
             $dataset = AZervo::getModel(self::DATASETS_PATH.$modelName);
-            $results[$modelName] = $dataset->getDownloadURL($doi);
+            if(in_array($type, $dataset::RESULTS_TYPE)) {
+                $results[$modelName] = $dataset->getDocumentURL($id);
+            }
         }
 
         return json_encode($results);
@@ -45,8 +49,13 @@ class Api
         curl_setopt_array($curl, array(
             CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_SSL_VERIFYHOST => false,
             CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "GET"
         ));
 

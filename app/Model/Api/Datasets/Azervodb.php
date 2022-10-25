@@ -7,10 +7,14 @@ use App\Model\Api;
 
 class Azervodb extends Api
 {
-    public function getDownloadURL($doi)
+    const RESULTS_TYPE = array(
+        "paper",
+        "book"
+    );
+    public function getDocumentURL($docId)
     {
         $links = array();
-        if($document = AZervo::getModel('document')->loadByDoi($doi)) {
+        if($document = AZervo::getModel('document')->loadByDocId($docId)) {
             $links = array_filter(explode(";", $document['links']));
             $linksStr = "AZervo ";
             $count = 0;
