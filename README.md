@@ -108,7 +108,7 @@ Link do Projeto: [https://github.com/matheus-delazeri/AZervo](https://github.com
 [issues-shield]: https://img.shields.io/github/issues/matheus-delazeri/AZervo.svg?style=for-the-badge
 [issues-url]: https://github.com/matheus-delazeri/AZervo/issues
 [license-shield]: https://img.shields.io/github/license/matheus-delazeri/AZervo.svg?style=for-the-badge
-[license-url]: https://github.com/matheus-delazeri/AZervo/blob/master/LICENSE.txt
+[license-url]: https://github.com/matheus-delazeri/AZervo/blob/master/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-matheus]: https://www.linkedin.com/in/matheus-delazeri-souza
 [product-screenshot]: https://user-images.githubusercontent.com/55641441/198127860-2ee41967-3eb9-4175-bf37-273d6cfd1f9b.png
