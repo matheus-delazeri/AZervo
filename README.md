@@ -1,20 +1,9 @@
 <a name="readme-top"></a>
 
-
-
-<!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
 
 
 <!-- PROJECT LOGO -->
@@ -28,6 +17,8 @@
 
   <p align="center">
     Todo conteúdo digital em um só lugar!
+    <br />
+    <a href="https://azervo.herokuapp.com/" target="_blank"><strong>Visitar site »</strong></a>
     <br />
     <a href="https://github.com/matheus-delazeri/AZervo/issues">Reportar Bug</a>
     ·
@@ -107,8 +98,6 @@ Link do Projeto: [https://github.com/matheus-delazeri/AZervo](https://github.com
 [stars-url]: https://github.com/matheus-delazeri/AZervo/stargazers
 [issues-shield]: https://img.shields.io/github/issues/matheus-delazeri/AZervo.svg?style=for-the-badge
 [issues-url]: https://github.com/matheus-delazeri/AZervo/issues
-[license-shield]: https://img.shields.io/github/license/matheus-delazeri/AZervo.svg?style=for-the-badge
-[license-url]: https://github.com/matheus-delazeri/AZervo/blob/master/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-matheus]: https://www.linkedin.com/in/matheus-delazeri-souza
 [product-screenshot]: https://user-images.githubusercontent.com/55641441/198127860-2ee41967-3eb9-4175-bf37-273d6cfd1f9b.png
