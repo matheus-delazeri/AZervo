@@ -14,7 +14,7 @@ $_results = $_api->getResultsFound($_currentPage);
 $_totalPages = ceil($_results["total_items"] / View::PAGINATION['items_per_page']);
 
 ?>
-<div class="row page results">
+<div class="row page">
     <?php if ($_results['total_items'] > 0): ?>
     <nav aria-label="Navegar">
         <?php echo AZervo::getModel('view')->getPaginationHeaderHTML($_results["total_items"]); ?>

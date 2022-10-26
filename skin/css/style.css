@@ -17,15 +17,13 @@ html, body {
     border-bottom: 1px solid #cecece;
 }
 .page {
-    height: 83%;
-    justify-content: center;
-}
-.results {
+    min-height: 80%;
     height: max-content;
+    justify-content: center;
     margin: 0 5%;
 }
 .footer {
-    padding: 10px;
+    padding: 2%;
     display: flex;
     flex-direction: column;
     justify-content: center;

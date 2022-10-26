@@ -6,8 +6,8 @@ use App\Model\Api\Crossref;
 $_crossRef = new Crossref();
 ?>
 <div class="row page">
-    <div class="col-md-3"></div>
-    <div class="col-md-6 container" style="align-items: center">
+    <div class="col-md-2"></div>
+    <div class="col-md-8 container" style="align-items: center">
         <img width="70%" src="<?php echo AZervo::getSkinUrl('images/logo-desc.png') ?>" alt="">
         <?php
         foreach (Crossref::FILTERS as $filter => $label) {
@@ -42,7 +42,7 @@ $_crossRef = new Crossref();
                                            src='<?php echo AZervo::getSkinUrl("images/loading.gif") ?>' alt=""></span>
         </div>
     </div>
-    <div class="col-md-3"></div>
+    <div class="col-md-2"></div>
 </div>
 <script type="text/javascript">
     jQuery(".btn-search").click(function () {

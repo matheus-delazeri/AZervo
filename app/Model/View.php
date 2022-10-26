@@ -6,7 +6,7 @@ class View
 {
     const PAGINATION = array(
         'max_pages_links' => 15,
-        'items_per_page' => 10
+        'items_per_page' => 5
     );
 
     public function getPaginationHeaderHTML($itemsCount)
