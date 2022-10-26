@@ -1,22 +1,62 @@
 <?php
+
 use App\AZervo;
+
 $_isLoggedIn = isset($_SESSION["user_id"]);
 ?>
-<div class="row top-header">
-    <div class="col-md-3 col-sm-12">
-        <a href="<?php echo AZervo::getUrl('index')?>">
+    <nav class="navbar navbar-expand-lg navbar-light top-header">
+        <a class="navbar-brand" href="<?php echo AZervo::getUrl('index') ?>">
+            <img class="logo" src="<?php echo AZervo::getSkinUrl("images/logo.png") ?>">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" style="justify-content: end" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="<?php echo AZervo::getUrl('index') ?>">Início</a>
+                <a class="nav-item nav-link" href="<?php echo AZervo::getUrl('about') ?>">Sobre</a>
+                <?php if ($_isLoggedIn) {
+                    echo "<a class='nav-item nav-link' href='" . AZervo::getUrl('user', 'account') . "'>Minha Conta</a>";
+                    echo "<a class='nav-item nav-link' href='" . AZervo::getUrl('user', 'logout') . "'>Sair</a>";
+                } else {
+                    echo "<a class='nav-item nav-link' href='" . AZervo::getUrl('user', 'account') . "'>Entrar</a>";
+                } ?>
+            </div>
+        </div>
+    </nav>
+    <!--
+    <div class="col-md-6 col-sm-12">
+        <a href="<?php echo AZervo::getUrl('index') ?>">
             <img class="logo" src="<?php echo AZervo::getSkinUrl("images/logo.png") ?>" alt="">
         </a>
     </div>
-    <div class="col-md-6"></div>
-    <div class="col-md-3 top-menu" style="display: flex; align-items: center; justify-content: end">
-        <a href="<?php echo AZervo::getUrl('index')?>">Início</a>
-        <a href="<?php echo AZervo::getUrl('about')?>">Sobre</a>
-        <?php if($_isLoggedIn) {
-            echo "<a href='".AZervo::getUrl('user', 'account')."'>Minha Conta</a>";
-            echo "<a href='".AZervo::getUrl('user', 'logout')."'>Sair</a>";
+    <div class="col-md-6">
+        <div>
+            <button class="btn btn-dark" style="width: max-content" type="button" data-toggle="collapse"
+                    data-target="#menu"
+                    aria-expanded="false" aria-controls="menu">
+                <i class="fa fa-bars"></i>
+            </button>
+            <div class="collapse" id="menu">
+                <a href="<?php echo AZervo::getUrl('index') ?>">Início</a>
+                <a href="<?php echo AZervo::getUrl('about') ?>">Sobre</a>
+                <?php if ($_isLoggedIn) {
+                    echo "<a href='" . AZervo::getUrl('user', 'account') . "'>Minha Conta</a>";
+                    echo "<a href='" . AZervo::getUrl('user', 'logout') . "'>Sair</a>";
+                } else {
+                    echo "<a href='" . AZervo::getUrl('user', 'account') . "'>Entrar</a>";
+                } ?>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 top-menu hide-mobile">
+        <a href="<?php echo AZervo::getUrl('index') ?>">Início</a>
+        <a href="<?php echo AZervo::getUrl('about') ?>">Sobre</a>
+        <?php if ($_isLoggedIn) {
+            echo "<a href='" . AZervo::getUrl('user', 'account') . "'>Minha Conta</a>";
+            echo "<a href='" . AZervo::getUrl('user', 'logout') . "'>Sair</a>";
         } else {
-            echo "<a href='".AZervo::getUrl('user', 'account')."'>Entrar</a>";
+            echo "<a href='" . AZervo::getUrl('user', 'account') . "'>Entrar</a>";
         } ?>
     </div>
-</div>
+    -->

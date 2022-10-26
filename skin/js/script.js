@@ -4,5 +4,5 @@ jQuery(document).ready(function () {
     })
     setTimeout(() => {
         jQuery(".msg-container").slideUp(150)
-    }, 4000)
+    }, 2000)
 })

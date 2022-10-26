@@ -19,12 +19,12 @@ class AZervo
 
     public static function addError($message)
     {
-        $_SESSION['messages'][] = "<div class='error-msg'><i class='fa fa-exclamation-circle'></i> $message</div>";
+        $_SESSION['messages'][] = "<div class='alert alert-danger' role='alert'><i class='fa fa-exclamation-circle'></i> $message</div>";
     }
 
     public static function addSuccess($message)
     {
-        $_SESSION['messages'][] = "<div class='success-msg'><i class='fa fa-check'></i> $message</div>";
+        $_SESSION['messages'][] = "<div class='alert alert-success' role='alert'><i class='fa fa-check'></i> $message</div>";
     }
 
     public static function displayMessages()

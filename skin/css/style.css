@@ -8,8 +8,11 @@ html, body {
     width: 70%;
 }
 .top-header {
-    padding: 0 10px;
+    z-index: 9999;
     width: 100%;
+    position: fixed;
+    padding: 0 2rem;
+    margin: 0;
     background-color: #ffffff;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -17,19 +20,22 @@ html, body {
     border-bottom: 1px solid #cecece;
 }
 .page {
-    min-height: 80%;
+    min-height: 75%;
     height: max-content;
     justify-content: center;
     margin: 0 5%;
 }
-.footer {
-    padding: 2%;
+.navbar-light .navbar-nav .nav-link {
+    color: #007bff;
+}
+footer {
+    padding: 0.5rem 1.5rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    height: 10%;
     align-items: center;
     width: 100%;
-    height: 7%;
     background-color: #ffffff;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -53,13 +59,16 @@ html, body {
 .loading-gif {
     width: 10%;
 }
+.top-menu-mobile {
+    display: none;
+}
 .top-menu {
     display: flex;
     justify-content: end;
     align-items: center;
 }
 .top-menu a {
-    margin: 0 3%;
+    margin: 3%;
 }
 .title {
     border-bottom: 1px solid #cecece;
@@ -69,7 +78,6 @@ nav {
     align-self: center;
     margin: 20px 5px;
 }
-
 .container {
     display: flex;
     flex-direction: column;
@@ -93,6 +101,9 @@ li.page-item {
 .results-table td {
     overflow-wrap: anywhere;
 }
+.table thead th {
+    font-size: 14px;
+}
 tr.result td {
     vertical-align: middle;
     line-height: 1;
@@ -108,8 +119,11 @@ tr.result td {
     background: #e9ecef !important;
     border-color: #e9ecef !important;
 }
+.navbar-brand {
+    width: 10rem;
+}
 img.logo {
-    width: 40%;
+    width: 100%;
 }
 .actions {
     text-align: center;
@@ -123,7 +137,7 @@ img.logo {
 }
 .msg-container {
     display: none;
-    position: absolute;
+    position: fixed;
     right: 0;
     z-index: 9999;
     flex-direction: column;
@@ -132,33 +146,25 @@ img.logo {
     font-size: 14px;
 }
 
-.error-msg, .success-msg {
-    border: 1px solid;
-    border-radius: 2px;
-    margin: 2px 0;
-    padding: 10px 15px;
-    width: 100%;
-}
-.error-msg {
-    color: #D8000C;
-    background-color: #FFBABA;
-}
-.success-msg {
-    color: #4F8A10;
-    background-color: #DFF2BF;
-}
 @media only screen and (max-width: 990px) {
-    img.logo {
-        width: 40%;
-        margin: 0 30%;
+    .top-menu-mobile {
+        display: flex !important;
+        justify-content: center;
+        align-items: end;
+    }
+    .navbar-brand {
+        width: 8rem;
+    }
+    .hide-mobile {
+        display: none !important;
+    }
+    .input-group, .btn {
+        width: 90%;
     }
     .top-menu {
         justify-content: center !important;
     }
-    .top-menu a {
-        font-size: 14px;
-    }
-    .result {
+    .top-menu a, .result, .footer, .input-group-text, .btn {
         font-size: 13px;
     }
     .msg-container {
