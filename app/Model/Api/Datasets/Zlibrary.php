@@ -2,7 +2,6 @@
 
 namespace App\Model\Api\Datasets;
 
-use App\AZervo;
 use App\Model\Api;
 use DOMDocument;
 use DOMXPath;

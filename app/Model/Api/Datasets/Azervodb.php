@@ -11,6 +11,7 @@ class Azervodb extends Api
         "paper",
         "book"
     );
+
     public function getDocumentURL($docId)
     {
         $links = array();
