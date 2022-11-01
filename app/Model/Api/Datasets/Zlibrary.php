@@ -9,7 +9,7 @@ use DOMXPath;
 
 class Zlibrary extends Api
 {
-    const URL_PREFIX = "http://b-ok.lat/";
+    const URL_PREFIX = "https://b-ok.lat/";
     const RESULTS_TYPE = array(
         "book"
     );

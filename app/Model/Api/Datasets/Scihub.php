@@ -9,7 +9,7 @@ use DOMXPath;
 
 class Scihub extends Api
 {
-    const URL_PREFIX = "http://sci-hub.se/";
+    const URL_PREFIX = "https://sci-hub.se/";
     const RESULTS_TYPE = array(
         "paper"
     );
