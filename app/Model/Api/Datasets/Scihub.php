@@ -28,7 +28,7 @@ class Scihub extends Api
 
         return $url != ""
             ? $url
-            : "Sci-Hub <i class='".Api::ERROR_ICON_CLASS."'></i>";
+            : "Download [1] <i class='".Api::ERROR_ICON_CLASS."'></i>";
     }
 
     private function parseLocationHref($locationHref)
@@ -40,7 +40,7 @@ class Scihub extends Api
             $url = self::URL_PREFIX . $suffix;
         }
 
-        return "<a href='$url'>Sci-Hub <i class='".Api::DOWNLOAD_ICON_CLASS."'></i></a>";
+        return "<a href='$url'>Download [1] <i class='".Api::DOWNLOAD_ICON_CLASS."'></i></a>";
     }
 
 }

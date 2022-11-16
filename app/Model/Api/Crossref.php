@@ -8,7 +8,7 @@ use App\Model\View;
 class Crossref extends Api
 {
     const ENDPOINT = "http://api.crossref.org/works";
-    const MAX_ITEMS = 9990;
+    const MAX_ITEMS = 9999;
     const RESULTS_TYPE = "paper";
     const ATTRIBUTES = array(
         'doc_id' => "DOI",
@@ -24,8 +24,8 @@ class Crossref extends Api
     {
         $queryFilters = array();
         foreach (self::FILTERS as $filter => $label) {
-            if (isset($_GET[$filter])) {
-                $queryFilters["query.$filter"] = $_GET[$filter];
+            if (isset($_POST[$filter]) && !empty($_POST[$filter])) {
+                $queryFilters["query.$filter"] = $_POST[$filter];
             }
         }
 

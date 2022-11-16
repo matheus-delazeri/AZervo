@@ -5,49 +5,29 @@ AZervo::getModel("core");
 ?>
 <div class="row page">
     <div class="col-md-2"></div>
-    <div class="col-md-8 container" style="align-items: center">
+    <form action="<?php echo AZervo::getUrl('user', 'create')?>" method="post" class="col-md-8 container" style="align-items: center">
         <div class="input-group mb-2">
             <div class="input-group-prepend">
                 <span class="input-group-text">Nome</span>
             </div>
-            <input type="text" class="form-control" id="name" placeholder="Digite seu nome...">
+            <input type="text" class="form-control" name="name" placeholder="Digite seu nome...">
         </div>
         <div class="input-group mb-2">
             <div class="input-group-prepend">
                 <span class="input-group-text">E-mail</span>
             </div>
-            <input type="email" class="form-control" id="email" placeholder="Digite seu e-mail...">
+            <input type="email" class="form-control" name="email" placeholder="Digite seu e-mail...">
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text">Senha</span>
             </div>
-            <input type="password" class="form-control" id="password" placeholder="Digite sua senha...">
+            <input type="password" class="form-control" name="password" placeholder="Digite sua senha...">
         </div>
-        <button type="button" class="btn btn-dark" id="btn-login">
+        <button type="submit" class="btn btn-dark" id="btn-login">
             Registrar
             <i class="fa fa-user"></i>
         </button>
-    </div>
+    </form>
     <div class="col-md-2"></div>
 </div>
-<script>
-    jQuery("#btn-login").click(function () {
-        jQuery.ajax({
-            url: '<?php echo AZervo::getUrl('user', 'create')?>',
-            method: "POST",
-            data: {
-                name: jQuery("#name").val(),
-                email: jQuery("#email").val(),
-                password: jQuery("#password").val()
-            },
-            success: function (created) {
-                if(parseInt(created)) {
-                    window.location.href = '<?php echo AZervo::getUrl('user', 'account') ?>'
-                } else {
-                    window.location.reload()
-                }
-            }
-        })
-    })
-</script>

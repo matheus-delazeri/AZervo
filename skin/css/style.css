@@ -138,11 +138,12 @@ img.logo {
 .msg-container {
     display: none;
     position: fixed;
+    top: 10%;
     right: 0;
     z-index: 9999;
     flex-direction: column;
     width: 20%;
-    padding: 10px 30px;
+    padding: 10px;
     font-size: 14px;
 }
 

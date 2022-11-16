@@ -52,7 +52,7 @@ $_savedDocuments = AZervo::getModel('user')->getSavedDocuments();
                         <td class='results-links'>
                             <ul class='list-group list-group-flush links-list'><?php echo $links?></ul>
                         </td>
-                        <td class='actions'><i class='fa fa-star unsave-document' document='<?php echo $id?>'></i></td>
+                        <td class='actions'><i class='fa fa-trash unsave-document' document='<?php echo $id?>'></i></td>
                     </tr>
                 <?php endforeach;?>
                 </tbody>
@@ -76,7 +76,7 @@ $_savedDocuments = AZervo::getModel('user')->getSavedDocuments();
                     id: documentId,
                 },
                 success: function (data) {
-                    jQuery($this).parent().parent().remove()
+                    jQuery($this).parent().parent().slideUp(150)
                 }
             })
         })

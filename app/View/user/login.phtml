@@ -5,44 +5,25 @@ AZervo::getModel("core");
 ?>
 <div class="row page">
     <div class="col-md-2"></div>
-    <div class="col-md-8 container" style="align-items: center">
+    <form action="<?php echo AZervo::getUrl('user', 'login') ?>" method="post" class="col-md-8 container" style="align-items: center">
         <div class="input-group mb-2">
             <div class="input-group-prepend">
                 <span class="input-group-text">E-mail</span>
             </div>
-            <input type="email" class="form-control" id="email" placeholder="Digite seu e-mail...">
+            <input type="email" class="form-control" name="email" placeholder="Digite seu e-mail...">
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text">Senha</span>
             </div>
-            <input type="password" class="form-control" id="password" placeholder="Digite sua senha...">
+            <input type="password" class="form-control" name="password" placeholder="Digite sua senha...">
         </div>
-        <button type="button" class="btn btn-dark" id="btn-login">
+        <button type="submit" class="btn btn-dark" id="btn-login">
             Entrar
             <i class="fa fa-sign-in"></i>
         </button>
         <br>
         <p style="text-align: center">É novo por aqui? <a href="<?php echo AZervo::getUrl('user', 'register')?>">Registre-se!</a> </p>
-    </div>
+    </form>
     <div class="col-md-2"></div>
 </div>
-<script>
-    jQuery("#btn-login").click(function () {
-        jQuery.ajax({
-            url: '<?php echo AZervo::getUrl('user', 'login')?>',
-            method: "POST",
-            data: {
-                email: jQuery("#email").val(),
-                password: jQuery("#password").val()
-            },
-            success: function (logged) {
-                if(parseInt(logged)) {
-                    window.location.href = '<?php echo AZervo::getUrl('user', 'account') ?>'
-                } else {
-                    window.location.reload()
-                }
-            }
-        })
-    })
-</script>

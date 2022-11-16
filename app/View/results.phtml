@@ -3,8 +3,8 @@
 use App\AZervo;
 use App\Model\View;
 
-$_currentPage = $_GET["page"] ?? 1;
-if ($_GET["search_for"] == "books") {
+$_currentPage = $_POST["page"] ?? 1;
+if ($_POST["search-for"] == "books") {
     $_api = AZervo::getModel("api_google");
 } else {
     $_api = AZervo::getModel("api_crossref");

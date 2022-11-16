@@ -17,7 +17,8 @@ class UserController
 
     public function loginAction()
     {
-        echo (int)AZervo::getModel("user")->login();
+        AZervo::getModel("user")->login();
+        AZervo::redirect("user", "account");
     }
 
     public function registerAction()
@@ -27,7 +28,10 @@ class UserController
 
     public function createAction()
     {
-        echo (int)AZervo::getModel("user")->register();
+        if (AZervo::getModel("user")->register()) {
+            AZervo::redirect("user", "account");
+        }
+        AZervo::redirect("user", "register");
     }
 
     public function logoutAction()
