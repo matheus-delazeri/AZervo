@@ -1,8 +1,8 @@
-jQuery(document).ready(function () {
-    jQuery(".msg-container").slideDown(150, function() {
+$(document).ready(function () {
+    $(".msg-container").slideDown(150, function() {
         $(this).css('display', 'flex');
     })
     setTimeout(() => {
-        jQuery(".msg-container").slideUp(150)
+        $(".msg-container").slideUp(150)
     }, 2000)
 })

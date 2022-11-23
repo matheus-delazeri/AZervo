@@ -8,13 +8,11 @@ class Api
 {
     const DATASETS_MODELS = array(
         "scihub",
-        "azervodb",
-        "zlibrary"
+        "azervodb"
     );
 
     const ERROR_ICON_CLASS = "fa fa-close";
     const DOWNLOAD_ICON_CLASS = "fa fa-download";
-    const EXTERNAL_ICON_CLASS = "fa fa-external-link";
     const DATASETS_PATH = "api_datasets_";
 
     public function getResultsInDatasets($id, $type)

@@ -24,8 +24,8 @@ class Crossref extends Api
     {
         $queryFilters = array();
         foreach (self::FILTERS as $filter => $label) {
-            if (isset($_POST[$filter]) && !empty($_POST[$filter])) {
-                $queryFilters["query.$filter"] = $_POST[$filter];
+            if (isset($_GET[$filter]) && !empty($_GET[$filter])) {
+                $queryFilters["query.$filter"] = $_GET[$filter];
             }
         }
 
@@ -43,7 +43,7 @@ class Crossref extends Api
             "order" => "desc",
             "select" => "DOI,title,author,type,subject,ISBN",
             "rows" => View::PAGINATION['items_per_page'],
-            "offset" => ($page - 1) * View::PAGINATION['items_per_page']
+            "offset" => ($page - 1) *View::PAGINATION['items_per_page']
         );
 
         $queryFilters = $this->getQueryFilters();

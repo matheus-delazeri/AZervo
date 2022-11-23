@@ -3,12 +3,8 @@
 use App\AZervo;
 use App\Model\View;
 
-$_currentPage = $_POST["page"] ?? 1;
-if ($_POST["search-for"] == "books") {
-    $_api = AZervo::getModel("api_google");
-} else {
-    $_api = AZervo::getModel("api_crossref");
-}
+$_currentPage = $_GET["page"] ?? 1;
+$_api = AZervo::getModel("api_crossref");
 
 $_results = $_api->getResultsFound($_currentPage);
 $_totalPages = ceil($_results["total_items"] / View::PAGINATION['items_per_page']);
@@ -64,6 +60,8 @@ $_totalPages = ceil($_results["total_items"] / View::PAGINATION['items_per_page'
     <?php else: # If no result found
         AZervo::loadBlocK('noResult');
     endif; ?>
+    <div class="floating-search-btn"><i class="fa fa-search"></i></div>
+    <div class="floating-search" style="display: none"><i class="fa fa-close floating-search-close"></i><?php AZervo::loadBlock('searchForm'); ?></div>
 </div>
 
 <script type="text/javascript">
@@ -73,12 +71,12 @@ $_totalPages = ceil($_results["total_items"] / View::PAGINATION['items_per_page'
 
         return (query.length > 2 ? query + "&" : "?") + (newval ? param + "=" + newval : '');
     }
-
+    
     document.addEventListener("DOMContentLoaded", function () {
-        let currentPage = jQuery(".page-item.active").attr("page")
+        let currentPage = $(".page-item.active").attr("page")
         let maxPage = "<?php echo $_totalPages?>"
-        let nextPageBtn = jQuery(".next-page")
-        let previousPageBtn = jQuery(".previous-page")
+        let nextPageBtn = $(".next-page")
+        let previousPageBtn = $(".previous-page")
         if (currentPage === "1") {
             previousPageBtn.addClass("disabled")
         }
@@ -93,8 +91,16 @@ $_totalPages = ceil($_results["total_items"] / View::PAGINATION['items_per_page'
             window.location.replace(newUrl)
         }
 
-        jQuery(".page-item").click(function () {
-            let newPage = jQuery(this).attr("page")
+        $(".floating-search-btn").click(function () {
+            $(".floating-search").show()
+        })
+
+        $(".floating-search-close").click(function () {
+            $(".floating-search").hide()
+        })
+
+        $(".page-item").click(function () {
+            let newPage = $(this).attr("page")
             paginate(newPage)
         })
 
@@ -107,11 +113,11 @@ $_totalPages = ceil($_results["total_items"] / View::PAGINATION['items_per_page'
             paginate(newPage)
         })
 
-        jQuery(".result").each(function () {
-            let documentId = jQuery(this).attr("document")
-            let documentType = jQuery(this).attr("doctype")
+        $(".result").each(function () {
+            let documentId = $(this).attr("document")
+            let documentType = $(this).attr("doctype")
             let $this = this
-            jQuery.ajax({
+            $.ajax({
                 url: '<?php echo AZervo::getUrl("search", "inDatasets")?>',
                 method: "POST",
                 data: {
@@ -120,56 +126,56 @@ $_totalPages = ceil($_results["total_items"] / View::PAGINATION['items_per_page'
                 },
                 dataType: "json",
                 success: function (results) {
-                    let resultsEl = jQuery($this).find('.results-links')
-                    jQuery(resultsEl).html("<ul class='list-group list-group-flush links-list'></ul>")
-                    jQuery.each(results, function (dataset, url) {
-                        let linksListEl = jQuery($this).find('.links-list')
-                        jQuery(linksListEl).append(`<li class="list-group-item">${url}</li>`)
+                    let resultsEl = $($this).find('.results-links')
+                    $(resultsEl).html("<ul class='list-group list-group-flush links-list'></ul>")
+                    $.each(results, function (dataset, url) {
+                        let linksListEl = $($this).find('.links-list')
+                        $(linksListEl).append(`<li class="list-group-item">${url}</li>`)
                     })
                 }
             })
         })
 
-        jQuery(document).on('click', '.save-document', function () {
+        $(document).on('click', '.save-document', function () {
             let $this = this
             let document = {}
-            let documentRow = jQuery(this).parent().parent()
+            let documentRow = $(this).parent().parent()
             documentRow.find(".result-info > .result-attribute").each(function () {
-                document[jQuery(this).attr('attr_id')] = jQuery(this).attr('attr_value')
+                document[$(this).attr('attr_id')] = $(this).attr('attr_value')
             })
             let documentLinks = []
             documentRow.find(".results-links > ul").each(function () {
-                if (jQuery(this).find("a")) {
-                    documentLinks.push(jQuery(this).find("a").attr("href"))
+                if ($(this).find("a")) {
+                    documentLinks.push($(this).find("a").attr("href"))
                 }
             })
             documentLinks = documentLinks.join(";")
             document['links'] = documentLinks
-            jQuery.ajax({
+            $.ajax({
                 url: '<?php echo AZervo::getUrl('user', 'saveDocument') ?>',
                 method: 'POST',
                 data: {
                     document: JSON.stringify(document),
                 },
                 success: function () {
-                    jQuery($this).removeClass('fa-star-o save-document')
-                    jQuery($this).addClass('fa-star unsave-document')
+                    $($this).removeClass('fa-star-o save-document')
+                    $($this).addClass('fa-star unsave-document')
                 }
             })
         })
 
-        jQuery(document).on('click', '.unsave-document', function () {
+        $(document).on('click', '.unsave-document', function () {
             let $this = this
-            let documentId = jQuery(this).attr('document')
-            jQuery.ajax({
+            let documentId = $(this).attr('document')
+            $.ajax({
                 url: '<?php echo AZervo::getUrl('user', 'unsaveDocument') ?>',
                 method: 'POST',
                 data: {
                     id: documentId,
                 },
                 success: function () {
-                    jQuery($this).removeClass('fa-star unsave-document')
-                    jQuery($this).addClass('fa-star-o save-document')
+                    $($this).removeClass('fa-star unsave-document')
+                    $($this).addClass('fa-star-o save-document')
                 }
             })
         })

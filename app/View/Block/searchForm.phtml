@@ -1,0 +1,32 @@
+<?php
+
+use App\AZervo;
+use App\Model\Api\Crossref;
+
+$_crossRef = new Crossref();
+?>
+<form action="<?php echo AZervo::getUrl("search", "results") ?>" method="get" class="col-md-12 container"
+      style="align-items: center;">
+    <img width="50%" style="margin-bottom: 2%" src="<?php echo AZervo::getSkinUrl('images/logo-desc.png') ?>" alt="">
+    <?php
+    foreach (Crossref::FILTERS as $filter => $label) {
+        echo '
+                    <div class="input-group mb-2">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text query-filter" filter="' . $filter . '">' . $label . '</span>
+                      </div>
+                      <input type="text" class="form-control" name="' . $filter . '" placeholder="Digite aqui...">
+                    </div>
+                    ';
+    }
+    ?>
+    <button type="submit" class="btn btn-dark btn-search">
+        Buscar
+        <i class="fa fa-search"></i>
+    </button>
+    <br>
+    <div class="searching" style="display: none">
+            <span>Buscando resultados <img class="loading-gif"
+                                           src='<?php echo AZervo::getSkinUrl("images/loading.gif") ?>' alt=""></span>
+    </div>
+</form>

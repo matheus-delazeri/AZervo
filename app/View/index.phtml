@@ -5,42 +5,6 @@ use App\Model\Api\Crossref;
 
 $_crossRef = new Crossref();
 ?>
-<div class="row page">
-    <div class="col-md-2"></div>
-    <form action="<?php echo AZervo::getUrl("search", "results")?>" method="post" class="col-md-8 container" style="align-items: center">
-        <img width="50%" style="margin-bottom: 2%" src="<?php echo AZervo::getSkinUrl('images/logo-desc.png') ?>" alt="">
-        <?php
-        foreach (Crossref::FILTERS as $filter => $label) {
-            echo '
-                    <div class="input-group mb-2">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text query-filter" filter="' . $filter . '">' . $label . '</span>
-                      </div>
-                      <input type="text" class="form-control" name="'.$filter.'" placeholder="Digite aqui...">
-                    </div>
-                    ';
-        }
-        ?>
-        <div class="search-for">
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="search-for" id="papers" value="papers" checked>
-                <label class="form-check-label" for="papers">Artigos</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="search-for" id="books" value="books">
-                <label class="form-check-label" for="books">Livros</label>
-            </div>
-        </div>
-        <br>
-        <button type="submit" class="btn btn-dark btn-search">
-            Buscar
-            <i class="fa fa-search"></i>
-        </button>
-        <br>
-        <div class="searching" style="display: none">
-            <span>Buscando resultados <img class="loading-gif"
-                                           src='<?php echo AZervo::getSkinUrl("images/loading.gif") ?>' alt=""></span>
-        </div>
-    </form>
-    <div class="col-md-2"></div>
+<div class="row page" style="padding: 0 20%">
+    <?php AZervo::loadBlock('searchForm');?>
 </div>

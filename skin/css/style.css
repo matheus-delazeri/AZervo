@@ -146,7 +146,31 @@ img.logo {
     padding: 10px;
     font-size: 14px;
 }
-
+.floating-search-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    border: 1px solid #cecece;
+    border-radius: 50px;
+    padding: 1%;
+}
+.floating-search-btn:hover, .floating-search-close:hover {
+    cursor: pointer;
+    scale: 1.1;
+}
+.floating-search {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #ffffff;
+    border: 1px solid #cecece;
+    border-radius: 10px;
+    width: 20%;
+    z-index: 9999;
+}
+.floating-search-close {
+    padding: 15px;
+}
 @media only screen and (max-width: 990px) {
     .top-menu-mobile {
         display: flex !important;
