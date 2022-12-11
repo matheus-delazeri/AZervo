@@ -167,7 +167,7 @@ img.logo {
     background: #ffffff;
     border: 1px solid #cecece;
     border-radius: 10px;
-    width: 21rem;
+    width: 40rem;
     z-index: 9999;
 }
 .floating-search-close {
@@ -196,5 +196,8 @@ img.logo {
     }
     .msg-container {
         width: 100% !important;
+    }
+    .floating-search {
+        width: 23rem;
     }
 }

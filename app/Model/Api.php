@@ -6,6 +6,7 @@ use App\AZervo;
 
 class Api
 {
+    protected $_curl;
     const DATASETS_MODELS = array(
         "scihub",
         "azervodb"
@@ -14,6 +15,11 @@ class Api
     const ERROR_ICON_CLASS = "fa fa-close";
     const DOWNLOAD_ICON_CLASS = "fa fa-download";
     const DATASETS_PATH = "api_datasets_";
+
+    public function __construct()
+    {
+        $this->_curl = curl_init();
+    }
 
     public function getResultsInDatasets($id, $type)
     {
@@ -31,28 +37,24 @@ class Api
     public function call($url, $params = array(), $jsonReturn = true)
     {
         $url = $this->buildGETUrl($url, $params);
-        $curl = $this->buildCurl($url);
+        $this->buildCurl($url);
 
-        $response = curl_exec($curl);
+        $response = curl_exec($this->_curl);
         if($jsonReturn) $response = json_decode($response, true);
-        curl_close($curl);
 
         return $response;
     }
 
     private function buildCurl($url)
     {
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
+        curl_setopt_array($this->_curl, array(
             CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_MAXREDIRS => 10,
-            CURLOPT_FOLLOWLOCATION => true
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_IPRESOLVE => CURL_IPRESOLVE_V4
         ));
-
-        return $curl;
     }
 
     public function buildGETUrl($baseUrl, $params)
