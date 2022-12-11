@@ -62,7 +62,6 @@ Esta aplicação tem como principal intuito facilitar a busca por documentos dig
 AZervo utiliza de algumas fontes de dados disponíveis na internet para disponibilzar os documentos. Sendo elas:
 
 - [Sci-Hub](https://www.sci-hub.se/): um dos maiores fornecedores de artigos digitais;
-- [Z-Library](https://z-lib.org/):  dataset que fornece uma enorme variedade de livros digitais;
 
 Além disso, o projeto contém uma base de dados particular que armazena os documentos das fontes listadas acima, em caso dos mesmos serem removidos destas.
 
@@ -100,7 +99,7 @@ Link do Projeto: [https://github.com/matheus-delazeri/AZervo](https://github.com
 [issues-url]: https://github.com/matheus-delazeri/AZervo/issues
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-matheus]: https://www.linkedin.com/in/matheus-delazeri-souza
-[product-screenshot]: https://user-images.githubusercontent.com/55641441/198127860-2ee41967-3eb9-4175-bf37-273d6cfd1f9b.png
+[product-screenshot]: https://user-images.githubusercontent.com/55641441/203998097-13c53b33-235e-4835-9773-219d6750a866.png
 [PHP]: https://img.shields.io/badge/PHP-35495E?style=for-the-badge&logo=php&logoColor=white
 [PHP-url]: https://www.php.net/
 [Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
